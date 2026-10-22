@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review a Corridor Funding balance record.">
+  <title>Balance Details | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav>
+      <a href="admin.html">Admin Dashboard</a>
+      <a href="admin-users.html">Customers</a>
+      <a href="admin-balances.html">Balances</a>
+      <button type="button" data-signout>Sign Out</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <p><a href="admin-balances.html">← Back to balance management</a></p>
+
+    <section class="admin-page-heading">
+      <h1>Balance Record Details</h1>
+      <p>Review the stored information for this balance record.</p>
+    </section>
+
+    <p id="balanceDetailsStatus" role="status" aria-live="polite">
+      Checking administrator access…
+    </p>
+
+    <section id="balanceDetailsContent" class="admin-panel" hidden>
+      <h2>Stored balance information</h2>
+      <dl id="balanceDetailsList"></dl>
+
+      <p>
+        A stored balance is not, by itself, proof of available funds,
+        a completed transfer, or a bank-confirmed amount. Verify the
+        underlying ledger and financial records before relying on it.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-balance-details.js"></script>
+</body>
+</html>

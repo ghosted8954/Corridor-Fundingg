@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Contact Corridor Funding with questions about the website or your account.">
+  <title>Contact Us | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="index.html" class="brand">Corridor Funding</a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="login.html">Sign In</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="contact-hero">
+      <p class="contact-eyebrow">WE'RE HERE TO HELP</p>
+      <h1>Contact Corridor Funding</h1>
+      <p>
+        Send a question about the website or your account using the
+        contact options currently available.
+      </p>
+    </section>
+
+    <section class="contact-layout">
+      <div class="contact-information">
+        <h2>Before contacting us</h2>
+        <p>
+          For account-specific questions, sign in first when appropriate.
+          Never include your password, full payment-card number, or other
+          unnecessary sensitive information in a message.
+        </p>
+
+        <div class="contact-info-card">
+          <h3>Account assistance</h3>
+          <p>For login, email verification and profile questions.</p>
+          <a href="login.html">Go to sign in</a>
+        </div>
+
+        <div class="contact-info-card">
+          <h3>Application questions</h3>
+          <p>Check the status of an existing application through your account.</p>
+          <a href="applications.html">View applications</a>
+        </div>
+
+        <div class="contact-info-card">
+          <h3>Complaints</h3>
+          <p>Use the dedicated page for the available complaint process.</p>
+          <a href="complaints.html">Submit or review a complaint</a>
+        </div>
+
+        <div class="contact-info-card">
+          <h3>Common questions</h3>
+          <p>Find general answers about applications and accounts.</p>
+          <a href="faq.html">Visit the FAQ</a>
+        </div>
+
+        <p class="contact-note">
+          Support email addresses, phone numbers and response times should
+          only be published here after they have been verified and configured.
+        </p>
+      </div>
+
+      <div class="contact-form-card">
+        <h2>Send a message</h2>
+        <p>
+          This form uses the signed-in support system. Sign in before
+          submitting a support request.
+        </p>
+
+        <form id="contactForm">
+          <label for="contactName">Your name</label>
+          <input
+            id="contactName"
+            name="name"
+            type="text"
+            maxlength="100"
+            autocomplete="name"
+            required
+          >
+
+          <label for="contactEmail">Email address</label>
+          <input
+            id="contactEmail"
+            name="email"
+            type="email"
+            maxlength="254"
+            autocomplete="email"
+            required
+          >
+
+          <label for="contactCategory">Topic</label>
+          <select id="contactCategory" name="category" required>
+            <option value="">Select a topic</option>
+            <option value="account">Account assistance</option>
+            <option value="application">Application question</option>
+            <option value="technical">Website technical issue</option>
+            <option value="general">General question</option>
+          </select>
+
+          <label for="contactSubject">Subject</label>
+          <input
+            id="contactSubject"
+            name="subject"
+            type="text"
+            maxlength="120"
+            required
+          >
+
+          <label for="contactMessage">Message</label>
+          <textarea
+            id="contactMessage"
+            name="message"
+            rows="6"
+            maxlength="3000"
+            required
+          ></textarea>
+
+          <p class="contact-note">
+            Do not include passwords, full payment-card details or sensitive
+            identity documents.
+          </p>
+
+          <p id="contactStatus" role="status" aria-live="polite"></p>
+
+          <button type="submit">Continue to Support</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="disclosures.html">Disclosures</a>
+    <a href="complaints.html">Complaints</a>
+  </footer>
+
+  <script type="module">
+    import { auth } from "./firebase-init.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("contactStatus");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      status.textContent = "";
+
+      if (!form.reportValidity()) return;
+
+      const user = auth.currentUser;
+
+      if (!user) {
+        const next = encodeURIComponent("contact.html");
+        window.location.href = `login.html?next=${next}`;
+        return;
+      }
+
+      status.textContent = "Checking your sign-in status…";
+
+      try {
+        await new Promise((resolve, reject) => {
+          const unsubscribe = onAuthStateChanged(
+            auth,
+            (currentUser) => {
+              unsubscribe();
+              if (currentUser) resolve(currentUser);
+              else reject(new Error("Please sign in again."));
+            },
+            (error) => {
+              unsubscribe();
+              reject(error);
+            }
+          );
+        });
+
+        const data = new FormData(form);
+        const params = new URLSearchParams({
+          category: String(data.get("category") || ""),
+          subject: String(data.get("subject") || "").trim(),
+          message:
+            `Name: ${String(data.get("name") || "").trim()}\n` +
+            `Email: ${String(data.get("email") || "").trim()}\n\n` +
+            String(data.get("message") || "").trim()
+        });
+
+        window.location.href = `support.html?${params.toString()}`;
+      } catch (error) {
+        status.textContent =
+          error.message || "Unable to confirm your sign-in. Please try again.";
+      }
+    });
+  </script>
+</body>
+</html>

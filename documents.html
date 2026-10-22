@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Documents | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="dashboard.html" class="brand">Corridor Funding</a>
+    <nav aria-label="Customer navigation">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="applications.html">Applications</a>
+      <a href="offers.html">Offers</a>
+      <a href="messages.html">Messages</a>
+      <button type="button" data-signout>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <h1>My Documents</h1>
+    <p>View document records associated with your loan applications.</p>
+
+    <section class="admin-panel">
+      <h2>Add a document record</h2>
+      <p>
+        This form records document information only. It does not upload a file.
+        Do not enter Social Security numbers, bank account numbers, passwords,
+        or other sensitive information in the notes field.
+      </p>
+
+      <form id="documentForm">
+        <label for="applicationId">Application ID</label>
+        <input id="applicationId" type="text" maxlength="100" required
+          placeholder="Enter your application ID">
+
+        <label for="documentType">Document type</label>
+        <select id="documentType" required>
+          <option value="">Select document type</option>
+          <option value="proof-of-income">Proof of income</option>
+          <option value="proof-of-address">Proof of address</option>
+          <option value="identity-document">Identity document</option>
+          <option value="bank-statement">Bank statement</option>
+          <option value="business-document">Business document</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="documentName">Document label</label>
+        <input id="documentName" type="text" maxlength="120" required
+          placeholder="e.g. Recent income statement">
+
+        <label for="documentNotes">Optional note</label>
+        <textarea id="documentNotes" rows="3" maxlength="500"
+          placeholder="Brief note without sensitive personal information"></textarea>
+
+        <button type="submit">Create document record</button>
+        <p id="documentFormStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-section-heading">
+        <h2>My document records</h2>
+        <button type="button" id="refreshDocuments">Refresh</button>
+      </div>
+
+      <p id="documentListStatus" role="status" aria-live="polite"></p>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Document</th>
+              <th>Application ID</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody id="documentsTableBody">
+            <tr><td colspan="5">Loading records...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="auth-guard.js"></script>
+  <script type="module" src="documents.js"></script>
+</body>
+</html>

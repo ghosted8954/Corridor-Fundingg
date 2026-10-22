@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Estimate loan payments with the Corridor Funding loan calculator.">
+  <title>Loan Calculator | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="index.html" class="brand">Corridor Funding</a>
+    <nav aria-label="Main navigation">
+      <a href="personal-loans.html">Personal Loans</a>
+      <a href="mortgage.html">Mortgage</a>
+      <a href="business-loans.html">Business Loans</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="login.html">Sign In</a>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <section class="admin-panel">
+      <h1>Loan Calculator</h1>
+      <p>Estimate your monthly payment using the amount, annual interest rate, and repayment term you enter.</p>
+
+      <form id="calculatorForm">
+        <label for="loanAmount">Loan amount (USD)</label>
+        <input id="loanAmount" name="loanAmount" type="number"
+          min="1" max="100000000" step="0.01" value="10000" required>
+
+        <label for="annualRate">Annual interest rate (%)</label>
+        <input id="annualRate" name="annualRate" type="number"
+          min="0" max="100" step="0.01" value="10" required>
+
+        <label for="loanTerm">Repayment term</label>
+        <select id="loanTerm" name="loanTerm" required>
+          <option value="12">12 months</option>
+          <option value="24">24 months</option>
+          <option value="36" selected>36 months</option>
+          <option value="48">48 months</option>
+          <option value="60">60 months</option>
+          <option value="120">120 months</option>
+          <option value="180">180 months</option>
+          <option value="240">240 months</option>
+          <option value="360">360 months</option>
+        </select>
+
+        <button type="submit">Calculate payment</button>
+      </form>
+    </section>
+
+    <section class="admin-panel" aria-labelledby="resultsHeading">
+      <h2 id="resultsHeading">Estimated results</h2>
+      <p id="calculatorStatus" role="status" aria-live="polite">
+        Enter your details and calculate an estimate.
+      </p>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <h3>Estimated monthly payment</h3>
+          <p id="monthlyPayment">—</p>
+        </article>
+
+        <article class="stat-card">
+          <h3>Total estimated repayment</h3>
+          <p id="totalRepayment">—</p>
+        </article>
+
+        <article class="stat-card">
+          <h3>Estimated interest</h3>
+          <p id="totalInterest">—</p>
+        </article>
+      </div>
+
+      <p>
+        This calculator assumes fixed monthly payments and a fixed interest
+        rate. It excludes fees, insurance, taxes, escrow, and other costs.
+        Actual loan terms and payments may differ.
+      </p>
+
+      <a href="register.html">Create an account</a>
+      <span> or </span>
+      <a href="contact.html">Contact us</a>
+    </section>
+
+    <section class="admin-panel">
+      <h2>How the estimate works</h2>
+      <p>
+        For a positive monthly interest rate, the calculator uses the standard
+        amortizing-loan payment formula. At a zero interest rate, the principal
+        is divided equally across the selected number of months.
+      </p>
+      <p>
+        The rate entered here is only for estimation. It does not represent
+        an advertised, approved, or guaranteed rate from Corridor Funding.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Loan availability, eligibility, rates, fees, terms and funding times vary
+      by product, state and applicant. Not all applicants qualify. Approval
+      is not guaranteed. Review all applicable disclosures before accepting
+      any offer.
+    </p>
+    <a href="disclosures.html">Disclosures</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </footer>
+
+  <script type="module" src="calculator.js"></script>
+</body>
+</html>

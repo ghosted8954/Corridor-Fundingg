@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Customer Messages | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="adminAccessStatus" role="status" aria-live="polite">
+    Verifying administrator access...
+  </div>
+
+  <main id="adminPageContent" hidden>
+    <header class="admin-header">
+      <a href="admin.html" class="brand">Corridor Funding</a>
+      <nav aria-label="Admin navigation">
+        <a href="admin.html">Dashboard</a>
+        <a href="admin-chat.html">Live Chat</a>
+        <a href="admin-messages.html" aria-current="page">Messages</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </header>
+
+    <section class="admin-container">
+      <h1>Customer Conversations</h1>
+      <p>Find a conversation and open it in the live chat workspace.</p>
+
+      <div id="adminMessagesStatus" role="status" aria-live="polite"></div>
+
+      <section class="admin-panel">
+        <label for="messageConversationSearch">Search conversations</label>
+        <input id="messageConversationSearch"
+               type="search"
+               placeholder="Conversation ID or customer UID">
+        <button type="button" id="refreshMessageConversations">Refresh</button>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Conversation ID</th>
+                <th>Participants</th>
+                <th>Status</th>
+                <th>Last updated</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="messageConversationsBody">
+              <tr><td colspan="5">Loading conversations...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-messages.js"></script>
+</body>
+</html>

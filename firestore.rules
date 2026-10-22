@@ -1,0 +1,315 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function hasRole(roleName) {
+      return signedIn()
+        && request.auth.token.role == roleName;
+    }
+
+    function isStaff() {
+      return signedIn()
+        && request.auth.token.role in [
+          'super_admin',
+          'admin',
+          'loan_officer',
+          'support'
+        ];
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.role in [
+          'super_admin',
+          'admin'
+        ];
+    }
+
+    function validUserProfile(uid) {
+      return request.resource.data.keys().hasOnly([
+          'uid',
+          'email',
+          'displayName',
+          'phone',
+          'address',
+          'city',
+          'state',
+          'postalCode',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.uid == uid
+        && request.resource.data.email == request.auth.token.email;
+    }
+
+    // Customer profiles: no client-controlled roles or balances.
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isStaff();
+
+      allow create: if isOwner(uid)
+        && validUserProfile(uid)
+        && request.resource.data.keys().hasAll([
+          'uid', 'email', 'createdAt'
+        ]);
+
+      allow update: if isOwner(uid)
+        && request.resource.data.diff(resource.data)
+          .affectedKeys().hasOnly([
+            'displayName',
+            'phone',
+            'address',
+            'city',
+            'state',
+            'postalCode',
+            'updatedAt'
+          ])
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.email == resource.data.email;
+
+      // Profile deletion should use a controlled account-closure process.
+      allow delete: if false;
+    }
+
+    // Loan applications.
+    match /applications/{applicationId} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly([
+          'ownerUid',
+          'product',
+          'state',
+          'status',
+          'requestedAmount',
+          'purpose',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.status in ['draft', 'submitted']
+        && request.resource.data.product in [
+          'personal',
+          'mortgage',
+          'business',
+          'debt-consolidation'
+        ]
+        && request.resource.data.state is string
+        && request.resource.data.requestedAmount is number
+        && request.resource.data.requestedAmount > 0
+        && request.resource.data.requestedAmount <= 100000000;
+
+      allow read: if signedIn()
+        && (resource.data.ownerUid == request.auth.uid || isStaff());
+
+      allow update: if isStaff()
+        || (
+          signedIn()
+          && resource.data.ownerUid == request.auth.uid
+          && resource.data.status == 'draft'
+          && request.resource.data.ownerUid == resource.data.ownerUid
+          && request.resource.data.diff(resource.data)
+            .affectedKeys().hasOnly([
+              'product',
+              'state',
+              'requestedAmount',
+              'purpose',
+              'updatedAt'
+            ])
+        );
+
+      allow delete: if false;
+    }
+
+    // Loan offers: staff create and manage; customers can read their own.
+    match /offers/{offerId} {
+      allow read: if isStaff()
+        || (
+          signedIn()
+          && resource.data.ownerUid == request.auth.uid
+        );
+
+      allow create, update, delete: if isStaff();
+    }
+
+    // Loan records. Financial records must not be customer-editable.
+    match /loans/{loanId} {
+      allow read: if isStaff()
+        || (
+          signedIn()
+          && resource.data.ownerUid == request.auth.uid
+        );
+
+      allow write: if false;
+    }
+
+    // Transaction records are written by trusted backend processes only.
+    match /transactions/{transactionId} {
+      allow read: if isStaff()
+        || (
+          signedIn()
+          && resource.data.ownerUid == request.auth.uid
+        );
+
+      allow write: if false;
+    }
+
+    // Balance/ledger data: customers may view their own records only.
+    match /balances/{uid} {
+      allow read: if isOwner(uid) || isStaff();
+      allow write: if false;
+    }
+
+    // Document metadata only. This does not upload or store file contents.
+    match /documents/{documentId} {
+      allow read: if isStaff()
+        || (
+          signedIn()
+          && resource.data.ownerUid == request.auth.uid
+        );
+
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.keys().hasOnly([
+          'ownerUid',
+          'applicationId',
+          'fileName',
+          'contentType',
+          'status',
+          'createdAt'
+        ])
+        && request.resource.data.status == 'pending';
+
+      allow update, delete: if isStaff();
+    }
+
+    // Conversations. Participants can read their own conversations.
+    match /conversations/{conversationId} {
+      allow read: if signedIn()
+        && (
+          request.auth.uid in resource.data.participantUids
+          || isStaff()
+        );
+
+      allow create: if signedIn()
+        && request.resource.data.participantUids is list
+        && request.auth.uid in request.resource.data.participantUids
+        && request.resource.data.participantUids.size() <= 2;
+
+      allow update: if isStaff()
+        || (
+          signedIn()
+          && request.auth.uid in resource.data.participantUids
+          && request.resource.data.participantUids
+            == resource.data.participantUids
+        );
+
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        function conversationParticipant() {
+          return signedIn()
+            && exists(
+              /databases/$(database)/documents/conversations/$(conversationId)
+            )
+            && (
+              request.auth.uid in get(
+                /databases/$(database)/documents/conversations/$(conversationId)
+              ).data.participantUids
+              || isStaff()
+            );
+        }
+
+        allow read: if conversationParticipant();
+
+        allow create: if conversationParticipant()
+          && request.resource.data.senderUid == request.auth.uid
+          && request.resource.data.keys().hasOnly([
+            'senderUid',
+            'text',
+            'createdAt'
+          ])
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 5000;
+
+        allow update, delete: if false;
+      }
+    }
+
+    // Notifications: customers may mark their own notifications as read.
+    match /notifications/{notificationId} {
+      allow read: if isStaff()
+        || (
+          signedIn()
+          && resource.data.ownerUid == request.auth.uid
+        );
+
+      allow create, delete: if isStaff();
+
+      allow update: if signedIn()
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.diff(resource.data)
+          .affectedKeys().hasOnly(['read', 'readAt'])
+        && request.resource.data.read is bool;
+    }
+
+    // Support tickets.
+    match /supportTickets/{ticketId} {
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.keys().hasOnly([
+          'ownerUid',
+          'subject',
+          'message',
+          'status',
+          'createdAt'
+        ])
+        && request.resource.data.status == 'open'
+        && request.resource.data.subject is string
+        && request.resource.data.message is string;
+
+      allow read: if isStaff()
+        || (
+          signedIn()
+          && resource.data.ownerUid == request.auth.uid
+        );
+
+      allow update: if isStaff();
+      allow delete: if false;
+    }
+
+    // Public product/state pages may only read activated entries.
+    match /loanProducts/{productId} {
+      allow read: if resource.data.active == true;
+      allow write: if isAdmin();
+    }
+
+    match /stateAvailability/{stateCode} {
+      allow read: if resource.data.active == true;
+      allow write: if isAdmin();
+    }
+
+    // Public disclosures may be read; only admins manage them.
+    match /disclosures/{disclosureId} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // Audit records are read-only to staff from the browser.
+    // Trusted backend code should create these records.
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // No unlisted collection is accessible by default.
+  }
+}

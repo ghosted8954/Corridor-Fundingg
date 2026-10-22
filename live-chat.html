@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Chat | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="brand">
+        <img src="logo.svg" alt="Corridor Funding" width="180">
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation"
+        aria-expanded="false" data-menu-toggle>☰</button>
+      <nav class="site-nav" data-site-nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="messages.html">Messages</a>
+        <a href="support.html">Support</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dashboard-layout container">
+    <section class="dashboard-main">
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">CUSTOMER SERVICE</p>
+          <h1>Live Chat</h1>
+          <p>Messages appear here when a conversation is available to your account.</p>
+        </div>
+      </div>
+
+      <div id="chatStatus" class="status-message" role="status"
+        aria-live="polite">Connecting to conversation...</div>
+
+      <section class="chat-panel" aria-label="Chat conversation">
+        <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+
+        <form id="chatForm" class="chat-compose">
+          <label for="chatMessageInput">Your message</label>
+          <textarea id="chatMessageInput" rows="3" maxlength="2000"
+            required placeholder="Type your message..."></textarea>
+          <button id="sendChatButton" class="btn btn-primary" type="submit">
+            Send Message
+          </button>
+        </form>
+      </section>
+
+      <p class="legal-note">
+        Never send passwords, verification codes, full bank account details, or
+        full Social Security numbers through chat. Chat availability depends on
+        the configuration of your account and support service.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="ui.js"></script>
+  <script type="module" src="live-chat.js"></script>
+</body>
+</html>

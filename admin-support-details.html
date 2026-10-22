@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Support Ticket Details | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="adminAccessStatus" role="status" aria-live="polite">
+    Verifying administrator access...
+  </div>
+
+  <main id="adminPageContent" hidden>
+    <header class="admin-header">
+      <a href="admin.html" class="brand">Corridor Funding</a>
+      <nav aria-label="Admin navigation">
+        <a href="admin.html">Dashboard</a>
+        <a href="admin-support.html">Support Tickets</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </header>
+
+    <section class="admin-container">
+      <a href="admin-support.html">← Back to support tickets</a>
+      <h1>Support Ticket Details</h1>
+
+      <div id="supportDetailsStatus" role="status" aria-live="polite"></div>
+
+      <section class="admin-panel">
+        <dl>
+          <dt>Ticket ID</dt>
+          <dd id="ticketId">Loading...</dd>
+
+          <dt>Customer UID</dt>
+          <dd id="ticketOwnerUid">—</dd>
+
+          <dt>Subject</dt>
+          <dd id="ticketSubject">—</dd>
+
+          <dt>Category</dt>
+          <dd id="ticketCategory">—</dd>
+
+          <dt>Customer message</dt>
+          <dd id="ticketMessage">—</dd>
+
+          <dt>Status</dt>
+          <dd id="ticketStatus">—</dd>
+
+          <dt>Created</dt>
+          <dd id="ticketCreatedAt">—</dd>
+
+          <dt>Last updated</dt>
+          <dd id="ticketUpdatedAt">—</dd>
+        </dl>
+      </section>
+
+      <section class="admin-panel">
+        <h2>Update ticket status</h2>
+        <form id="supportStatusForm">
+          <label for="newTicketStatus">New status</label>
+          <select id="newTicketStatus" required>
+            <option value="open">Open</option>
+            <option value="in_progress">In progress</option>
+            <option value="waiting_customer">Waiting for customer</option>
+            <option value="resolved">Resolved</option>
+            <option value="closed">Closed</option>
+          </select>
+
+          <label for="supportInternalNote">Internal note (optional)</label>
+          <textarea id="supportInternalNote"
+                    rows="3"
+                    maxlength="1000"
+                    placeholder="Record a brief, professional internal note"></textarea>
+
+          <button type="submit" id="saveSupportStatus">Save status</button>
+        </form>
+      </section>
+
+      <p class="admin-notice">
+        Internal notes are not customer replies. Do not store passwords,
+        complete payment-card details, or unnecessary sensitive personal data
+        in ticket notes.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-support-details.js"></script>
+</body>
+</html>

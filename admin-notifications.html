@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Notification Management | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="adminAccessStatus" role="status" aria-live="polite">
+    Verifying administrator access...
+  </div>
+
+  <main id="adminPageContent" hidden>
+    <header class="admin-header">
+      <a href="admin.html" class="brand">Corridor Funding</a>
+      <nav aria-label="Admin navigation">
+        <a href="admin.html">Dashboard</a>
+        <a href="admin-users.html">Customers</a>
+        <a href="admin-notifications.html" aria-current="page">Notifications</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </header>
+
+    <section class="admin-container">
+      <div class="admin-page-heading">
+        <div>
+          <p class="eyebrow">CUSTOMER COMMUNICATIONS</p>
+          <h1>Notification Management</h1>
+          <p>Review notification records and create in-app notifications for customers.</p>
+        </div>
+        <button type="button" id="refreshAdminNotifications">Refresh</button>
+      </div>
+
+      <div id="adminNotificationsStatus" role="status" aria-live="polite"></div>
+
+      <section class="admin-panel">
+        <h2>Create an in-app notification</h2>
+        <form id="createNotificationForm">
+          <label for="notificationOwnerUid">Customer UID</label>
+          <input id="notificationOwnerUid"
+                 type="text"
+                 maxlength="128"
+                 required
+                 autocomplete="off"
+                 placeholder="Enter the exact Firebase user UID">
+
+          <label for="notificationTitle">Title</label>
+          <input id="notificationTitle"
+                 type="text"
+                 maxlength="120"
+                 required
+                 placeholder="Notification title">
+
+          <label for="notificationMessage">Message</label>
+          <textarea id="notificationMessage"
+                    rows="4"
+                    maxlength="1500"
+                    required
+                    placeholder="Write a clear, accurate message"></textarea>
+
+          <label for="notificationCategory">Category</label>
+          <select id="notificationCategory" required>
+            <option value="general">General</option>
+            <option value="application">Application update</option>
+            <option value="account">Account update</option>
+            <option value="support">Support</option>
+          </select>
+
+          <button type="submit" id="createNotificationButton">
+            Create notification
+          </button>
+        </form>
+
+        <p class="admin-notice">
+          This creates an in-app notification record only. It does not send an
+          email or SMS. Do not use notifications to falsely claim that a loan
+          has been approved, funds have been sent, or a payment has been received.
+        </p>
+      </section>
+
+      <section class="admin-panel">
+        <h2>Recent notification records</h2>
+
+        <label for="notificationSearch">Search</label>
+        <input id="notificationSearch"
+               type="search"
+               placeholder="Search by notification ID or customer UID">
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Notification ID</th>
+                <th>Customer UID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Read</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+            <tbody id="adminNotificationsTableBody">
+              <tr><td colspan="6">Loading notifications...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p id="adminNotificationsCount">No records loaded.</p>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-notifications.js"></script>
+</body>
+</html>

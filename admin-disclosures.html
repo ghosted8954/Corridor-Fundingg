@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Disclosure Management | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav aria-label="Admin navigation">
+      <a href="admin.html">Dashboard</a>
+      <a href="admin-products.html">Products</a>
+      <a href="admin-states.html">States</a>
+      <button type="button" data-signout>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <h1>Disclosure Management</h1>
+    <p>Manage disclosure records and their review status. Obtain qualified legal and compliance review before publishing any disclosure.</p>
+
+    <section class="admin-panel">
+      <h2>Create or update a disclosure</h2>
+      <form id="disclosureForm">
+        <label for="disclosureId">Disclosure ID</label>
+        <input id="disclosureId" type="text" maxlength="80"
+          placeholder="e.g. general-loan-disclaimer" required>
+
+        <label for="disclosureTitle">Title</label>
+        <input id="disclosureTitle" type="text" maxlength="150" required>
+
+        <label for="disclosureCategory">Category</label>
+        <select id="disclosureCategory" required>
+          <option value="">Select category</option>
+          <option value="general">General</option>
+          <option value="personal">Personal loans</option>
+          <option value="mortgage">Mortgage loans</option>
+          <option value="business">Business loans</option>
+          <option value="state">State-specific</option>
+          <option value="privacy">Privacy</option>
+          <option value="electronic-consent">Electronic consent</option>
+        </select>
+
+        <label for="disclosureContent">Disclosure content</label>
+        <textarea id="disclosureContent" rows="8" maxlength="15000"
+          required></textarea>
+
+        <label for="disclosureStatus">Review status</label>
+        <select id="disclosureStatus" required>
+          <option value="draft">Draft</option>
+          <option value="pending-review">Pending legal review</option>
+          <option value="approved">Approved for publication</option>
+          <option value="archived">Archived</option>
+        </select>
+
+        <label>
+          <input id="disclosurePublished" type="checkbox">
+          Published
+        </label>
+
+        <p>Only mark a disclosure approved or published after the appropriate review and authorization.</p>
+        <button type="submit">Save disclosure</button>
+        <p id="disclosureFormStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-section-heading">
+        <h2>Disclosure records</h2>
+        <button type="button" id="refreshDisclosures">Refresh</button>
+      </div>
+      <p id="disclosureListStatus" role="status" aria-live="polite"></p>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Review status</th>
+              <th>Published</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="disclosuresTableBody">
+            <tr><td colspan="6">Loading disclosures...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-disclosures.js"></script>
+</body>
+</html>

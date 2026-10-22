@@ -1,0 +1,85 @@
+
+.disclosure-page {
+  background: #ffffff;
+}
+
+.disclosure-hero {
+  padding: 56px 24px;
+  background: #f3f7fb;
+  text-align: center;
+}
+
+.disclosure-eyebrow {
+  color: #2e78b7;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.disclosure-hero h1 {
+  margin: 12px 0;
+  color: #163b63;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.disclosure-hero p:last-child {
+  max-width: 760px;
+  margin-right: auto;
+  margin-left: auto;
+  line-height: 1.8;
+}
+
+.disclosure-content {
+  display: grid;
+  gap: 18px;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 42px 24px 60px;
+}
+
+.disclosure-card {
+  padding: 24px;
+  border: 1px solid #dce5ed;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.disclosure-card h2 {
+  margin-top: 0;
+  color: #163b63;
+  font-size: 1.2rem;
+}
+
+.disclosure-card p {
+  line-height: 1.85;
+}
+
+.disclosure-card a {
+  color: #2e78b7;
+  font-weight: 700;
+}
+
+.disclosure-separator {
+  margin: 0 8px;
+}
+
+.disclosure-footer-note {
+  padding: 20px;
+  border-left: 4px solid #2e78b7;
+  background: #f3f7fb;
+  line-height: 1.85;
+}
+
+@media (max-width: 600px) {
+  .disclosure-hero {
+    padding: 42px 20px;
+  }
+
+  .disclosure-content {
+    padding: 28px 20px 40px;
+  }
+
+  .disclosure-card {
+    padding: 19px;
+  }
+}

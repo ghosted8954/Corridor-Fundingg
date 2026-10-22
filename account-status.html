@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Corridor Funding account access information.">
+  <title>Account Status | Corridor Funding</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="auth.css">
+  <script type="module">
+    const reason = new URLSearchParams(location.search).get("reason");
+    const title = document.getElementById("statusTitle");
+    const message = document.getElementById("statusMessage");
+
+    if (reason === "restricted") {
+      title.textContent = "Access restricted";
+      message.textContent =
+        "Your account does not have permission to access that area. If you believe this is an error, contact support.";
+    } else if (reason === "suspended") {
+      title.textContent = "Account access unavailable";
+      message.textContent =
+        "Your account may require review. Please contact support for information about your account status.";
+    } else {
+      title.textContent = "Account information";
+      message.textContent =
+        "For assistance with signing in or accessing your account, contact Corridor Funding support.";
+    }
+  </script>
+</head>
+<body class="auth-page">
+  <header class="auth-header">
+    <a href="index.html" aria-label="Corridor Funding home">
+      <img src="logo.svg" alt="Corridor Funding">
+    </a>
+    <a href="login.html">Sign in</a>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card">
+      <h1 id="statusTitle">Account information</h1>
+      <p id="statusMessage" class="auth-intro">Please wait...</p>
+
+      <div class="auth-form">
+        <a class="auth-submit" href="login.html" style="display:block;text-align:center;text-decoration:none;box-sizing:border-box">Return to sign in</a>
+        <a class="auth-secondary-button" href="contact.html" style="display:block;text-align:center;text-decoration:none;box-sizing:border-box">Contact support</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="auth-footer">
+    <a href="privacy.html">Privacy</a> ·
+    <a href="terms.html">Terms</a>
+  </footer>
+</body>
+</html>

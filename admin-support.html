@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Support Management | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="adminAccessStatus" role="status" aria-live="polite">
+    Verifying administrator access...
+  </div>
+
+  <main id="adminPageContent" hidden>
+    <header class="admin-header">
+      <a href="admin.html" class="brand">Corridor Funding</a>
+      <nav aria-label="Admin navigation">
+        <a href="admin.html">Dashboard</a>
+        <a href="admin-users.html">Customers</a>
+        <a href="admin-support.html" aria-current="page">Support Tickets</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </header>
+
+    <section class="admin-container">
+      <div class="admin-page-heading">
+        <div>
+          <p class="eyebrow">CUSTOMER CARE</p>
+          <h1>Support Ticket Management</h1>
+          <p>Review support requests and track their progress.</p>
+        </div>
+        <button type="button" id="refreshSupportTickets">Refresh</button>
+      </div>
+
+      <div id="adminSupportStatus" role="status" aria-live="polite"></div>
+
+      <section class="admin-panel">
+        <label for="supportSearch">Search tickets</label>
+        <input id="supportSearch"
+               type="search"
+               placeholder="Ticket ID, customer UID, or subject">
+
+        <label for="supportStatusFilter">Ticket status</label>
+        <select id="supportStatusFilter">
+          <option value="">All statuses</option>
+          <option value="open">Open</option>
+          <option value="in_progress">In progress</option>
+          <option value="waiting_customer">Waiting for customer</option>
+          <option value="resolved">Resolved</option>
+          <option value="closed">Closed</option>
+        </select>
+
+        <button type="button" id="clearSupportFilters">Clear filters</button>
+      </section>
+
+      <section class="admin-panel">
+        <h2>Customer support tickets</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Customer UID</th>
+                <th>Subject</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="supportTicketsBody">
+              <tr><td colspan="7">Loading support tickets...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p id="supportTicketsCount">No records loaded.</p>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-support.js"></script>
+</body>
+</html>

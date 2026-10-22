@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review a Corridor Funding transaction record.">
+  <title>Transaction Details | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav>
+      <a href="admin.html">Admin Dashboard</a>
+      <a href="admin-balances.html">Balances</a>
+      <a href="admin-transactions.html">Transactions</a>
+      <button type="button" data-signout>Sign Out</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <p><a href="admin-transactions.html">← Back to transactions</a></p>
+
+    <section class="admin-page-heading">
+      <h1>Transaction Details</h1>
+      <p>Review the information stored for this transaction.</p>
+    </section>
+
+    <p id="transactionDetailsStatus" role="status" aria-live="polite">
+      Checking administrator access…
+    </p>
+
+    <section id="transactionDetailsContent" class="admin-panel" hidden>
+      <h2>Transaction record</h2>
+      <dl id="transactionDetailsList"></dl>
+
+      <p>
+        This page is read-only. It cannot issue refunds, reverse transfers,
+        initiate payments, or adjust balances. Those actions require a separate
+        authorized financial workflow and a reliable audit trail.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-transaction-details.js"></script>
+</body>
+</html>

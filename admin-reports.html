@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Reports | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav aria-label="Admin navigation">
+      <a href="admin.html">Dashboard</a>
+      <a href="admin-applications.html">Applications</a>
+      <a href="admin-loans.html">Loans</a>
+      <a href="admin-audit-logs.html">Audit Logs</a>
+      <button type="button" data-signout>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <h1>Reports</h1>
+    <p>View summary counts from records currently available to your administrator account. These summaries are not audited financial statements.</p>
+
+    <section class="admin-panel">
+      <h2>Report filters</h2>
+      <label for="reportType">Report type</label>
+      <select id="reportType">
+        <option value="applications">Applications</option>
+        <option value="loans">Loans</option>
+        <option value="offers">Offers</option>
+        <option value="transactions">Transactions</option>
+        <option value="users">Registered users</option>
+      </select>
+
+      <button type="button" id="generateReport">Generate report</button>
+      <button type="button" id="exportReport">Export displayed report as CSV</button>
+      <p id="reportStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Report summary</h2>
+      <div class="stats-grid">
+        <article class="stat-card">
+          <h3>Total records</h3>
+          <p id="reportTotal">—</p>
+        </article>
+        <article class="stat-card">
+          <h3>Pending / in progress</h3>
+          <p id="reportPending">—</p>
+        </article>
+        <article class="stat-card">
+          <h3>Completed / approved</h3>
+          <p id="reportCompleted">—</p>
+        </article>
+        <article class="stat-card">
+          <h3>Declined / failed</h3>
+          <p id="reportDeclined">—</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Report records</h2>
+      <p id="reportDataNote">Generate a report to display records.</p>
+      <div class="table-responsive">
+        <table>
+          <thead id="reportTableHead">
+            <tr><th>Information</th></tr>
+          </thead>
+          <tbody id="reportTableBody">
+            <tr><td>No report generated yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-reports.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review a Corridor Funding loan application.">
+  <title>Application Details | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav>
+      <a href="admin.html">Admin Dashboard</a>
+      <a href="admin-users.html">Customers</a>
+      <a href="admin-applications.html">Applications</a>
+      <button type="button" data-signout>Sign Out</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <p><a href="admin-applications.html">← Back to applications</a></p>
+
+    <section class="admin-page-heading">
+      <h1>Application Details</h1>
+      <p>Review the information carefully before recording a decision.</p>
+    </section>
+
+    <p id="applicationDetailsStatus" role="status" aria-live="polite">
+      Checking administrator access…
+    </p>
+
+    <section id="applicationDetailsContent" class="admin-panel" hidden>
+      <h2>Application information</h2>
+      <dl id="applicationDetailsList"></dl>
+
+      <h2>Review decision</h2>
+      <p>
+        Recording a decision updates the application record only. It does not
+        create a loan, issue an offer, transfer funds or guarantee funding.
+      </p>
+
+      <form id="applicationDecisionForm">
+        <label for="decisionStatus">Decision</label>
+        <select id="decisionStatus" required>
+          <option value="">Choose a decision</option>
+          <option value="in_review">Mark as in review</option>
+          <option value="approved">Record approved</option>
+          <option value="declined">Record declined</option>
+        </select>
+
+        <label for="decisionReason">
+          Review note or decline reason
+        </label>
+        <textarea id="decisionReason" rows="5" maxlength="2000"
+          placeholder="Explain the decision clearly and professionally."
+          required></textarea>
+
+        <p>
+          Keep notes factual and appropriate. A decline reason shown to a
+          customer must be accurate and consistent with applicable law and
+          the lender's review process.
+        </p>
+
+        <button type="submit" id="saveDecisionButton">Save decision</button>
+      </form>
+
+      <p id="decisionSaveStatus" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-application-details.js"></script>
+</body>
+</html>

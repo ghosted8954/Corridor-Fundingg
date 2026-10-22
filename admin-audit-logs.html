@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Audit Logs | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav aria-label="Admin navigation">
+      <a href="admin.html">Dashboard</a>
+      <a href="admin-reports.html">Reports</a>
+      <a href="admin-settings.html">Settings</a>
+      <button type="button" data-signout>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <h1>Audit Logs</h1>
+    <p>Review available audit events. Logs are only reliable to the extent that trusted server-side workflows create and protect them.</p>
+
+    <section class="admin-panel">
+      <label for="auditSearch">Search by actor, action or record ID</label>
+      <input id="auditSearch" type="search" maxlength="150"
+        placeholder="Search audit records">
+
+      <label for="auditActionFilter">Filter by action</label>
+      <select id="auditActionFilter">
+        <option value="">All actions</option>
+        <option value="application">Application</option>
+        <option value="user">User</option>
+        <option value="loan">Loan</option>
+        <option value="offer">Offer</option>
+        <option value="balance">Balance</option>
+        <option value="transaction">Transaction</option>
+        <option value="support">Support</option>
+        <option value="settings">Settings</option>
+      </select>
+
+      <button type="button" id="refreshAuditLogs">Refresh logs</button>
+      <p id="auditStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="admin-panel">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Actor UID</th>
+              <th>Action</th>
+              <th>Target type</th>
+              <th>Target ID</th>
+              <th>Summary</th>
+            </tr>
+          </thead>
+          <tbody id="auditTableBody">
+            <tr><td colspan="6">Loading audit logs...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-audit.js"></script>
+</body>
+</html>

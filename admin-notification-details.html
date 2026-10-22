@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Notification Details | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="adminAccessStatus" role="status" aria-live="polite">
+    Verifying administrator access...
+  </div>
+
+  <main id="adminPageContent" hidden>
+    <header class="admin-header">
+      <a href="admin.html" class="brand">Corridor Funding</a>
+      <nav aria-label="Admin navigation">
+        <a href="admin.html">Dashboard</a>
+        <a href="admin-notifications.html">Notifications</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </header>
+
+    <section class="admin-container">
+      <a href="admin-notifications.html">← Back to notifications</a>
+      <h1>Notification Details</h1>
+
+      <div id="notificationDetailsStatus" role="status" aria-live="polite"></div>
+
+      <section class="admin-panel">
+        <dl>
+          <dt>Notification ID</dt>
+          <dd id="notificationId">Loading...</dd>
+
+          <dt>Customer UID</dt>
+          <dd id="notificationOwnerUid">—</dd>
+
+          <dt>Title</dt>
+          <dd id="notificationTitle">—</dd>
+
+          <dt>Message</dt>
+          <dd id="notificationMessage">—</dd>
+
+          <dt>Category</dt>
+          <dd id="notificationCategory">—</dd>
+
+          <dt>Read</dt>
+          <dd id="notificationRead">—</dd>
+
+          <dt>Created by UID</dt>
+          <dd id="notificationCreatedBy">—</dd>
+
+          <dt>Created at</dt>
+          <dd id="notificationCreatedAt">—</dd>
+        </dl>
+      </section>
+
+      <p class="admin-notice">
+        A notification record confirms only that a database record exists.
+        It does not prove that the customer viewed the message or received
+        an email or SMS.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-notification-details.js"></script>
+</body>
+</html>

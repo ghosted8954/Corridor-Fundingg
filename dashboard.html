@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="View your Corridor Funding account dashboard.">
+  <title>My Dashboard | Corridor Funding</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <script type="module" src="dashboard.js"></script>
+</head>
+<body class="customer-dashboard">
+  <header class="dashboard-header">
+    <a href="index.html" class="dashboard-brand" aria-label="Corridor Funding home">
+      <img src="logo.svg" alt="Corridor Funding">
+    </a>
+    <nav class="dashboard-top-nav" aria-label="Account navigation">
+      <a href="profile.html">My profile</a>
+      <button type="button" class="dashboard-signout" data-signout>Sign out</button>
+    </nav>
+  </header>
+
+  <div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+      <p class="sidebar-label">MY ACCOUNT</p>
+      <a class="sidebar-link active" href="dashboard.html" aria-current="page">Overview</a>
+      <a class="sidebar-link" href="profile.html">Profile</a>
+      <a class="sidebar-link" href="applications.html">Applications</a>
+      <a class="sidebar-link" href="offers.html">Offers</a>
+      <a class="sidebar-link" href="loans.html">Loans</a>
+      <a class="sidebar-link" href="transactions.html">Transactions</a>
+      <a class="sidebar-link" href="documents.html">Documents</a>
+      <a class="sidebar-link" href="messages.html">Messages</a>
+      <a class="sidebar-link" href="notifications.html">Notifications</a>
+      <a class="sidebar-link" href="support.html">Support</a>
+      <a class="sidebar-link" href="settings.html">Settings</a>
+    </aside>
+
+    <main class="dashboard-main">
+      <div id="dashboardMessage" class="dashboard-message" role="status" aria-live="polite" hidden></div>
+
+      <section class="dashboard-welcome">
+        <div>
+          <p class="dashboard-eyebrow">ACCOUNT OVERVIEW</p>
+          <h1>Welcome, <span id="customerName">Customer</span></h1>
+          <p class="dashboard-subtitle">View your account and keep track of your applications.</p>
+        </div>
+        <a class="dashboard-primary-button" href="applications.html">Start an application</a>
+      </section>
+
+      <section class="dashboard-profile-strip" aria-label="Account information">
+        <div>
+          <span class="dashboard-small-label">Account email</span>
+          <strong id="customerEmail">Loading...</strong>
+        </div>
+        <div>
+          <span class="dashboard-small-label">Email verification</span>
+          <strong id="emailVerificationStatus">Checking...</strong>
+        </div>
+        <a href="profile.html">Edit profile</a>
+      </section>
+
+      <section class="dashboard-section">
+        <div class="dashboard-section-heading">
+          <div>
+            <h2>Your applications</h2>
+            <p>Application counts are loaded from your account records.</p>
+          </div>
+          <a href="applications.html">View all</a>
+        </div>
+
+        <div class="dashboard-stats">
+          <article class="dashboard-stat">
+            <span class="dashboard-stat-label">Total applications</span>
+            <strong id="applicationCount">—</strong>
+          </article>
+          <article class="dashboard-stat">
+            <span class="dashboard-stat-label">Submitted</span>
+            <strong id="submittedCount">—</strong>
+          </article>
+          <article class="dashboard-stat">
+            <span class="dashboard-stat-label">Drafts</span>
+            <strong id="draftCount">—</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="dashboard-section">
+        <div class="dashboard-section-heading">
+          <div>
+            <h2>Recent applications</h2>
+            <p>Only applications associated with your signed-in account are shown.</p>
+          </div>
+        </div>
+        <div id="recentApplications" class="dashboard-list">
+          <p class="dashboard-muted">Loading your applications...</p>
+        </div>
+      </section>
+
+      <section class="dashboard-notice">
+        <h2>Important information</h2>
+        <p>Submitting an application does not guarantee approval or funding. Eligibility, rates, fees, terms, and availability depend on the product, state, and applicant. Review the applicable disclosures before accepting any offer.</p>
+      </section>
+    </main>
+  </div>
+
+  <footer class="dashboard-footer">
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="disclosures.html">Disclosures</a>
+    <a href="contact.html">Contact</a>
+  </footer>
+</body>
+</html>

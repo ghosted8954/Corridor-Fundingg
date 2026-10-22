@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Loan Products | Corridor Funding Admin</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav aria-label="Admin navigation">
+      <a href="admin.html">Dashboard</a>
+      <a href="admin-states.html">State Availability</a>
+      <button type="button" data-signout>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <section>
+      <h1>Loan Products</h1>
+      <p>Manage the loan products configured in the system.</p>
+      <p><strong>Important:</strong> Keep products inactive until the required legal, licensing and compliance checks have been completed.</p>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Add a product</h2>
+      <form id="productForm">
+        <label for="productId">Product ID</label>
+        <select id="productId" required>
+          <option value="">Select a product</option>
+          <option value="personal">Personal loans</option>
+          <option value="mortgage">Mortgage loans</option>
+          <option value="business">Business loans</option>
+          <option value="debt-consolidation">Debt consolidation</option>
+        </select>
+
+        <label for="productName">Display name</label>
+        <input id="productName" type="text" maxlength="100" required>
+
+        <label for="productDescription">Description</label>
+        <textarea id="productDescription" rows="4" maxlength="1000" required></textarea>
+
+        <label>
+          <input id="productActive" type="checkbox">
+          Active (enable only after compliance approval)
+        </label>
+
+        <button type="submit">Save product</button>
+        <p id="productFormStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-section-heading">
+        <h2>Configured products</h2>
+        <button type="button" id="refreshProducts">Refresh</button>
+      </div>
+      <p id="productListStatus" role="status" aria-live="polite"></p>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <tr><td colspan="5">Loading products...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-products.js"></script>
+</body>
+</html>

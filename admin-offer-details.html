@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review a Corridor Funding loan offer record.">
+  <title>Offer Details | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav>
+      <a href="admin.html">Admin Dashboard</a>
+      <a href="admin-applications.html">Applications</a>
+      <a href="admin-loans.html">Loans</a>
+      <a href="admin-offers.html">Offers</a>
+      <button type="button" data-signout>Sign Out</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <p><a href="admin-offers.html">← Back to loan offers</a></p>
+
+    <section class="admin-page-heading">
+      <h1>Offer Details</h1>
+      <p>Review the offer information recorded in the system.</p>
+    </section>
+
+    <p id="offerDetailsStatus" role="status" aria-live="polite">
+      Checking administrator access…
+    </p>
+
+    <section id="offerDetailsContent" class="admin-panel" hidden>
+      <h2>Recorded offer terms</h2>
+      <dl id="offerDetailsList"></dl>
+
+      <p>
+        This page is read-only. Accepting or declining an offer, changing
+        financial terms, or creating a loan must use a separate authorized
+        workflow with validation and audit records.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-offer-details.js"></script>
+</body>
+</html>

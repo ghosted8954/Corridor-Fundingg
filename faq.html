@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Find answers to common questions about Corridor Funding applications, offers, and accounts.">
+  <title>Frequently Asked Questions | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="faq.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="index.html" class="brand">Corridor Funding</a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Sign In</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="faq-hero">
+      <p class="faq-eyebrow">HELP CENTER</p>
+      <h1>Frequently asked questions</h1>
+      <p>Find general information about applications, accounts and loan offers.</p>
+      <input
+        type="search"
+        id="faqSearch"
+        class="faq-search"
+        placeholder="Search questions..."
+        aria-label="Search frequently asked questions"
+      >
+    </section>
+
+    <section class="faq-list" id="faqList">
+      <details class="faq-item">
+        <summary>What is Corridor Funding?</summary>
+        <p>
+          Corridor Funding is a website designed to present financing
+          information and provide an online experience for exploring
+          available loan products. Actual services depend on verified
+          product and jurisdiction availability.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What types of loans can I explore?</summary>
+        <p>
+          The website may present personal, mortgage, business and
+          debt-consolidation products. Availability and eligibility vary.
+          A product displayed on the website is not a guarantee that it
+          is available to every applicant.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I start an application?</summary>
+        <p>
+          Review the relevant product information, check the applicable
+          requirements, and use the application page if the product is
+          available. Provide accurate information and review the applicable
+          privacy notice and disclosures.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Does submitting an application guarantee approval?</summary>
+        <p>
+          No. Applications may be reviewed for eligibility and may require
+          additional information. Submission does not guarantee approval,
+          a particular rate, or funding.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How will I know if my application has been reviewed?</summary>
+        <p>
+          If customer account and application-status features are enabled,
+          sign in to check your application status. You may also use the
+          official support channel for questions.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What interest rate or fees will I pay?</summary>
+        <p>
+          Rates, fees, repayment terms and other costs depend on the actual
+          product and offer. Review the written terms and required disclosures
+          before accepting an offer.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is an application fee required?</summary>
+        <p>
+          Do not assume that any fee is required. Verify every charge using
+          independently confirmed official contact details and review the
+          applicable written terms before paying anything.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I reset my password?</summary>
+        <p>
+          Use the password-reset option on the sign-in page and follow the
+          instructions sent to your registered email address. Check your
+          spam folder if the message does not arrive.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why do I need to verify my email?</summary>
+        <p>
+          Email verification helps confirm access to the email address
+          associated with an account. It does not establish identity,
+          creditworthiness or loan eligibility.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How is my personal information handled?</summary>
+        <p>
+          Review the Privacy Policy to understand how information is
+          collected, used, retained and protected. Do not send passwords,
+          full payment-card details or sensitive identity documents through
+          an unverified communication channel.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What should I do if I have a complaint?</summary>
+        <p>
+          Visit the complaints page for the available complaint process.
+          Keep copies of relevant communications and avoid sending sensitive
+          information until you have verified the official channel.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How can I contact support?</summary>
+        <p>
+          Visit the Contact page to see the contact methods currently
+          configured for this website. Response times depend on actual
+          support availability.
+        </p>
+      </details>
+    </section>
+
+    <p id="faqNoResults" class="faq-no-results" hidden>
+      No matching questions found. Try a different search term.
+    </p>
+
+    <section class="faq-contact">
+      <h2>Still need help?</h2>
+      <p>Visit our contact page to find the available support options.</p>
+      <a href="contact.html">Contact Support</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="about.html">About Us</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="disclosures.html">Disclosures</a>
+    <a href="complaints.html">Complaints</a>
+  </footer>
+
+  <script>
+    const faqSearch = document.getElementById("faqSearch");
+    const faqItems = [...document.querySelectorAll(".faq-item")];
+    const faqNoResults = document.getElementById("faqNoResults");
+
+    faqSearch.addEventListener("input", () => {
+      const term = faqSearch.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      faqItems.forEach((item) => {
+        const matches = item.textContent.toLowerCase().includes(term);
+        item.hidden = !matches;
+        if (matches) visibleCount++;
+      });
+
+      faqNoResults.hidden = visibleCount !== 0;
+    });
+  </script>
+</body>
+</html>

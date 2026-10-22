@@ -1,0 +1,83 @@
+
+.complaints-page {
+  background: #ffffff;
+}
+
+.complaints-hero {
+  padding: 56px 24px;
+  background: #f3f7fb;
+  text-align: center;
+}
+
+.complaints-eyebrow {
+  color: #2e78b7;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.complaints-hero h1 {
+  margin: 12px 0;
+  color: #163b63;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.complaints-hero p:last-child {
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.complaints-content {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 42px 24px 60px;
+  color: #25384b;
+}
+
+.complaints-content h2 {
+  margin-top: 32px;
+  color: #163b63;
+  font-size: 1.25rem;
+}
+
+.complaints-content p,
+.complaints-content li {
+  line-height: 1.85;
+}
+
+.complaints-content ol {
+  padding-left: 24px;
+}
+
+.complaints-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 13px 20px;
+  border-radius: 8px;
+  background: #163b63;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.complaints-button:hover {
+  background: #2e78b7;
+}
+
+.complaints-notice {
+  margin-top: 36px;
+  padding: 18px;
+  border-left: 4px solid #2e78b7;
+  background: #f3f7fb;
+}
+
+@media (max-width: 600px) {
+  .complaints-hero {
+    padding: 42px 20px;
+  }
+
+  .complaints-content {
+    padding: 28px 20px 40px;
+  }
+}

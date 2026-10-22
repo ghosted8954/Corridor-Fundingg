@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Document Record Details | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="adminAccessStatus" role="status" aria-live="polite">
+    Verifying administrator access...
+  </div>
+
+  <main id="adminPageContent" hidden>
+    <header class="admin-header">
+      <a href="admin.html" class="brand">Corridor Funding</a>
+      <nav aria-label="Admin navigation">
+        <a href="admin.html">Dashboard</a>
+        <a href="admin-documents.html">Documents</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </header>
+
+    <section class="admin-container">
+      <a href="admin-documents.html">← Back to document records</a>
+      <h1>Document Record Details</h1>
+      <p>Review the available metadata for this record.</p>
+
+      <div id="documentDetailsStatus" role="status" aria-live="polite"></div>
+
+      <section class="admin-panel">
+        <dl id="documentDetails">
+          <dt>Record ID</dt>
+          <dd id="detailId">Loading...</dd>
+
+          <dt>Customer UID</dt>
+          <dd id="detailOwnerUid">—</dd>
+
+          <dt>Application ID</dt>
+          <dd id="detailApplicationId">—</dd>
+
+          <dt>Document type</dt>
+          <dd id="detailType">—</dd>
+
+          <dt>Review status</dt>
+          <dd id="detailStatus">—</dd>
+
+          <dt>Original filename</dt>
+          <dd id="detailFilename">Not available</dd>
+
+          <dt>Content type</dt>
+          <dd id="detailContentType">Not available</dd>
+
+          <dt>Created</dt>
+          <dd id="detailCreatedAt">—</dd>
+
+          <dt>Last updated</dt>
+          <dd id="detailUpdatedAt">—</dd>
+
+          <dt>Reviewer UID</dt>
+          <dd id="detailReviewerUid">—</dd>
+
+          <dt>Review notes</dt>
+          <dd id="detailReviewNotes">No notes recorded.</dd>
+        </dl>
+      </section>
+
+      <p class="admin-notice">
+        This page is read-only. It does not open, download, or verify the contents
+        of any document. Do not place passwords, identity numbers, bank details,
+        or other sensitive document contents in review notes.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-document-details.js"></script>
+</body>
+</html>

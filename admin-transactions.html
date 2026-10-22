@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Corridor Funding administrator transaction history.">
+  <title>Transaction Management | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav>
+      <a href="admin.html">Admin Dashboard</a>
+      <a href="admin-applications.html">Applications</a>
+      <a href="admin-loans.html">Loans</a>
+      <a href="admin-balances.html">Balances</a>
+      <a href="admin-transactions.html" aria-current="page">Transactions</a>
+      <button type="button" data-signout>Sign Out</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-page-heading">
+      <h1>Transaction Management</h1>
+      <p>Review recorded transaction entries without changing financial records.</p>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-toolbar">
+        <label for="transactionSearch">Search transactions</label>
+        <input id="transactionSearch" type="search"
+          placeholder="Transaction ID, customer UID or reference">
+
+        <label for="transactionStatusFilter">Filter by status</label>
+        <select id="transactionStatusFilter">
+          <option value="all">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="completed">Completed</option>
+          <option value="failed">Failed</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="reversed">Reversed</option>
+        </select>
+
+        <button type="button" id="refreshTransactions">Refresh</button>
+      </div>
+
+      <p id="transactionsStatus" role="status" aria-live="polite">
+        Checking administrator access…
+      </p>
+
+      <div id="transactionsContent" class="admin-table-wrapper" hidden>
+        <table>
+          <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Customer UID</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Reference</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="transactionsTableBody"></tbody>
+        </table>
+
+        <p id="transactionsEmpty" hidden>No transactions match your search.</p>
+        <p>Showing up to 100 records per refresh.</p>
+      </div>
+    </section>
+
+    <aside class="admin-panel">
+      <h2>Transaction verification</h2>
+      <p>
+        A status stored in this system is not independent proof of a completed
+        payment or transfer. Verify financial activity against the authorized
+        payment provider or bank records before confirming completion.
+      </p>
+    </aside>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-transactions.js"></script>
+</body>
+</html>

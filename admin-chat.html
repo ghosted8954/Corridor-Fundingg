@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Live Chat Management | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+  <div id="adminAccessStatus" role="status" aria-live="polite">
+    Verifying administrator access...
+  </div>
+
+  <main id="adminPageContent" hidden>
+    <header class="admin-header">
+      <a href="admin.html" class="brand">Corridor Funding</a>
+      <nav aria-label="Admin navigation">
+        <a href="admin.html">Dashboard</a>
+        <a href="admin-messages.html">Messages</a>
+        <a href="admin-chat.html" aria-current="page">Live Chat</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </header>
+
+    <section class="admin-container">
+      <div class="admin-page-heading">
+        <div>
+          <p class="eyebrow">CUSTOMER SUPPORT</p>
+          <h1>Live Chat Management</h1>
+          <p>Review conversations and reply to customers.</p>
+        </div>
+        <button type="button" id="refreshConversations">Refresh</button>
+      </div>
+
+      <div id="adminChatStatus" role="status" aria-live="polite"></div>
+
+      <div class="admin-chat-layout">
+        <section class="admin-panel">
+          <h2>Conversations</h2>
+          <label for="conversationSearch">Search by conversation or customer UID</label>
+          <input id="conversationSearch" type="search" placeholder="Search conversations">
+
+          <div id="conversationList" aria-label="Conversation list">
+            <p>Loading conversations...</p>
+          </div>
+        </section>
+
+        <section class="admin-panel">
+          <h2 id="activeConversationTitle">Select a conversation</h2>
+          <p id="activeConversationInfo">Choose a conversation to view its messages.</p>
+
+          <div id="adminChatMessages"
+               role="log"
+               aria-live="polite"
+               aria-label="Conversation messages">
+            <p>No conversation selected.</p>
+          </div>
+
+          <form id="adminChatReplyForm">
+            <label for="adminChatReply">Your reply</label>
+            <textarea id="adminChatReply"
+                      rows="4"
+                      maxlength="3000"
+                      required
+                      placeholder="Write a helpful reply..."></textarea>
+            <button type="submit" id="sendAdminChatReply" disabled>Send reply</button>
+          </form>
+
+          <p class="admin-notice">
+            Do not ask customers to send passwords, full card numbers, or other
+            sensitive authentication details through chat.
+          </p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-chat.js"></script>
+</body>
+</html>

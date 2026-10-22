@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Corridor Funding administrator balance records.">
+  <title>Balance Management | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav>
+      <a href="admin.html">Admin Dashboard</a>
+      <a href="admin-users.html">Customers</a>
+      <a href="admin-applications.html">Applications</a>
+      <a href="admin-loans.html">Loans</a>
+      <a href="admin-balances.html" aria-current="page">Balances</a>
+      <button type="button" data-signout>Sign Out</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-page-heading">
+      <h1>Balance Management</h1>
+      <p>Review stored balance records for customer accounts.</p>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-toolbar">
+        <label for="balanceSearch">Search balance records</label>
+        <input id="balanceSearch" type="search"
+          placeholder="Record ID or customer UID">
+
+        <button type="button" id="refreshBalances">Refresh</button>
+      </div>
+
+      <p id="balancesStatus" role="status" aria-live="polite">
+        Checking administrator access…
+      </p>
+
+      <div id="balancesContent" class="admin-table-wrapper" hidden>
+        <table>
+          <thead>
+            <tr>
+              <th>Record ID</th>
+              <th>Customer UID</th>
+              <th>Recorded balance</th>
+              <th>Currency</th>
+              <th>Last updated</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="balancesTableBody"></tbody>
+        </table>
+
+        <p id="balancesEmpty" hidden>No balance records match your search.</p>
+        <p>Showing up to 100 records per refresh.</p>
+      </div>
+    </section>
+
+    <aside class="admin-panel">
+      <h2>Balance adjustment controls</h2>
+      <p>
+        This page is read-only. Do not change customer balances by editing
+        Firestore records manually or by adding a client-side balance update.
+        Adjustments require a trusted, authorized process that validates the
+        transaction and records an audit trail.
+      </p>
+    </aside>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-balances.js"></script>
+</body>
+</html>

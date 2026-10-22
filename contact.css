@@ -1,0 +1,145 @@
+
+.contact-hero {
+  padding: 56px 24px;
+  background: #f3f7fb;
+  text-align: center;
+}
+
+.contact-hero h1 {
+  margin: 12px 0;
+  color: #163b63;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.contact-hero p:last-child {
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.contact-eyebrow {
+  color: #2e78b7;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.contact-information h2,
+.contact-form-card h2 {
+  margin-top: 0;
+  color: #163b63;
+}
+
+.contact-information > p {
+  line-height: 1.8;
+}
+
+.contact-info-card {
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid #dce5ed;
+  border-radius: 10px;
+}
+
+.contact-info-card h3 {
+  margin-top: 0;
+  color: #163b63;
+}
+
+.contact-info-card p {
+  line-height: 1.7;
+}
+
+.contact-info-card a {
+  color: #2e78b7;
+  font-weight: 700;
+}
+
+.contact-form-card {
+  padding: 28px;
+  border: 1px solid #dce5ed;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.contact-form-card > p {
+  line-height: 1.7;
+}
+
+.contact-form-card form {
+  display: grid;
+  gap: 10px;
+}
+
+.contact-form-card label {
+  margin-top: 8px;
+  color: #163b63;
+  font-weight: 700;
+}
+
+.contact-form-card input,
+.contact-form-card select,
+.contact-form-card textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #cbd7e2;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #172b3f;
+  font: inherit;
+}
+
+.contact-form-card textarea {
+  resize: vertical;
+}
+
+.contact-form-card input:focus,
+.contact-form-card select:focus,
+.contact-form-card textarea:focus {
+  outline: 2px solid #57a8d8;
+  outline-offset: 2px;
+}
+
+.contact-form-card button {
+  margin-top: 12px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #163b63;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.contact-form-card button:hover {
+  background: #2e78b7;
+}
+
+.contact-note {
+  color: #526579;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 760px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    padding: 30px 20px;
+  }
+
+  .contact-form-card {
+    padding: 22px 18px;
+  }
+}

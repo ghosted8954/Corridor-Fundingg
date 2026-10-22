@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Document Management | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="adminAccessStatus" role="status" aria-live="polite">
+    Verifying administrator access...
+  </div>
+
+  <main id="adminPageContent" hidden>
+    <header class="admin-header">
+      <a href="admin.html" class="brand">Corridor Funding</a>
+      <nav aria-label="Admin navigation">
+        <a href="admin.html">Dashboard</a>
+        <a href="admin-applications.html">Applications</a>
+        <a href="admin-documents.html" aria-current="page">Documents</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </header>
+
+    <section class="admin-container">
+      <div class="admin-page-heading">
+        <div>
+          <p class="eyebrow">ADMINISTRATION</p>
+          <h1>Document Management</h1>
+          <p>Review document records and track their verification status.</p>
+        </div>
+        <button type="button" id="refreshDocuments">Refresh</button>
+      </div>
+
+      <div id="documentsStatus" role="status" aria-live="polite"></div>
+
+      <section class="admin-panel">
+        <form id="documentSearchForm">
+          <label for="documentSearch">Search records</label>
+          <input
+            id="documentSearch"
+            type="search"
+            placeholder="Record ID, customer UID, or application ID"
+          >
+
+          <label for="documentStatusFilter">Review status</label>
+          <select id="documentStatusFilter">
+            <option value="">All statuses</option>
+            <option value="pending">Pending</option>
+            <option value="under_review">Under review</option>
+            <option value="verified">Verified</option>
+            <option value="rejected">Rejected</option>
+            <option value="missing">Missing</option>
+          </select>
+
+          <button type="submit">Search</button>
+          <button type="button" id="clearDocumentFilters">Clear</button>
+        </form>
+      </section>
+
+      <section class="admin-panel">
+        <h2>Document records</h2>
+        <p>Only metadata is displayed. This page does not provide access to private files.</p>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Record ID</th>
+                <th>Customer UID</th>
+                <th>Document type</th>
+                <th>Application ID</th>
+                <th>Status</th>
+                <th>Submitted</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="documentsTableBody">
+              <tr>
+                <td colspan="7">Loading document records...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p id="documentsCount">No records loaded.</p>
+      </section>
+
+      <p class="admin-notice">
+        Document records are not proof that a file was securely received or verified.
+        Only authorized staff should review sensitive documents through an approved,
+        secure document-handling system.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-documents.js"></script>
+</body>
+</html>

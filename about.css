@@ -1,0 +1,97 @@
+
+.about-hero {
+  padding: 80px 24px;
+  background: linear-gradient(135deg, #163b63, #2e78b7);
+  color: #ffffff;
+}
+
+.about-hero-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.about-hero h1 {
+  max-width: 720px;
+  margin: 18px 0;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.about-hero-content > p:not(.about-eyebrow) {
+  max-width: 680px;
+  line-height: 1.8;
+}
+
+.about-link {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 13px 22px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #163b63;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.about-link:hover {
+  opacity: 0.9;
+}
+
+.about-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+
+.about-section h2,
+.about-value-card h2 {
+  color: #163b63;
+}
+
+.about-section p,
+.about-value-card p {
+  line-height: 1.8;
+}
+
+.about-values {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 24px 48px;
+}
+
+.about-value-card {
+  padding: 24px;
+  border: 1px solid #dce5ed;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.about-cta {
+  margin-bottom: 36px;
+  border-radius: 12px;
+  background: #f3f7fb;
+}
+
+@media (max-width: 720px) {
+  .about-hero {
+    padding: 56px 20px;
+  }
+
+  .about-values {
+    grid-template-columns: 1fr;
+    padding: 12px 20px 36px;
+  }
+
+  .about-section {
+    padding: 40px 20px;
+  }
+}

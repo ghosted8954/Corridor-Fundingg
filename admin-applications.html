@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Corridor Funding administration application review.">
+  <title>Application Management | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+    <nav>
+      <a href="admin.html">Admin Dashboard</a>
+      <a href="admin-users.html">Customers</a>
+      <a href="admin-applications.html" aria-current="page">Applications</a>
+      <button type="button" data-signout>Sign Out</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-page-heading">
+      <h1>Loan Applications</h1>
+      <p>Review submitted applications and open a record to examine its details.</p>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-toolbar">
+        <label for="applicationSearch">Search applications</label>
+        <input id="applicationSearch" type="search"
+          placeholder="Reference, customer UID, product or state">
+        <label for="applicationStatusFilter">Filter by status</label>
+        <select id="applicationStatusFilter">
+          <option value="all">All statuses</option>
+          <option value="submitted">Submitted</option>
+          <option value="in_review">In review</option>
+          <option value="approved">Approved</option>
+          <option value="declined">Declined</option>
+          <option value="draft">Draft</option>
+        </select>
+        <button type="button" id="refreshApplications">Refresh</button>
+      </div>
+
+      <p id="applicationsStatus" role="status" aria-live="polite">
+        Checking administrator access…
+      </p>
+
+      <div class="admin-table-wrapper" id="applicationsContent" hidden>
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Customer UID</th>
+              <th>Product</th>
+              <th>State</th>
+              <th>Requested amount</th>
+              <th>Status</th>
+              <th>Submitted</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="applicationsTableBody"></tbody>
+        </table>
+        <p id="applicationsEmpty" hidden>No applications match this filter.</p>
+        <p id="applicationsLimitNote">
+          Showing up to 100 records. Use Refresh to reload the latest records.
+        </p>
+      </div>
+    </section>
+
+    <p>
+      Application status is not a promise of funding. Verify eligibility,
+      applicable state requirements, disclosures and internal review procedures
+      before recording a final decision.
+    </p>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-applications.js"></script>
+</body>
+</html>

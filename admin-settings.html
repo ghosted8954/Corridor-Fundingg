@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Settings | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <a href="admin.html" class="brand">Corridor Funding</a>
+
+    <nav aria-label="Admin navigation">
+      <a href="admin.html">Dashboard</a>
+      <a href="admin-products.html">Products</a>
+      <a href="admin-states.html">States</a>
+      <a href="admin-audit-logs.html">Audit Logs</a>
+      <button type="button" data-signout>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <h1>Admin Settings</h1>
+    <p>Manage basic public-facing website configuration. Changes should be reviewed before being published.</p>
+
+    <section class="admin-panel">
+      <h2>Website information</h2>
+
+      <form id="siteSettingsForm">
+        <label for="siteName">Website name</label>
+        <input id="siteName" type="text" maxlength="100"
+          value="Corridor Funding" required>
+
+        <label for="supportEmail">Public support email</label>
+        <input id="supportEmail" type="email" maxlength="254"
+          placeholder="support@example.com" required>
+
+        <label for="supportPhone">Public support phone</label>
+        <input id="supportPhone" type="tel" maxlength="30"
+          placeholder="Enter verified support number">
+
+        <label for="supportHours">Support hours</label>
+        <input id="supportHours" type="text" maxlength="200"
+          placeholder="Enter confirmed support hours">
+
+        <label for="announcement">Public announcement</label>
+        <textarea id="announcement" rows="4" maxlength="1000"
+          placeholder="Optional announcement for website visitors"></textarea>
+
+        <label>
+          <input id="announcementEnabled" type="checkbox">
+          Show public announcement
+        </label>
+
+        <button type="submit">Save settings</button>
+        <p id="settingsStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Security reminders</h2>
+      <ul>
+        <li>Administrator roles must be assigned through a trusted server-side process.</li>
+        <li>Never store passwords, secret keys, API private keys or service-account credentials in website settings.</li>
+        <li>Do not enable a lending product or state until the required authorization and compliance checks are complete.</li>
+        <li>Changes to financial balances and transaction records must use a trusted, audited backend workflow.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script type="module" src="admin-auth.js"></script>
+  <script type="module" src="admin-settings.js"></script>
+</body>
+</html>
