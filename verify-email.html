@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Verify your email for Corridor Funding.">
+  <title>Verify Email | Corridor Funding</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="auth.css">
+  <script type="module" src="auth.js"></script>
+</head>
+<body class="auth-page">
+  <header class="auth-header">
+    <a href="index.html" aria-label="Corridor Funding home">
+      <img src="logo.svg" alt="Corridor Funding">
+    </a>
+    <button class="auth-secondary-button" type="button" data-signout>Sign out</button>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card">
+      <h1>Verify your email</h1>
+      <p class="auth-intro">Check your inbox for the verification email. Open its link, then return here to check your status.</p>
+
+      <div id="authMessage" class="auth-message" role="status" aria-live="polite" hidden></div>
+
+      <div class="auth-form">
+        <button id="checkVerification" class="auth-submit" type="button">I've verified my email</button>
+        <button id="resendVerification" class="auth-secondary-button" type="button">Resend verification email</button>
+      </div>
+
+      <p class="auth-note">If you cannot find the email, check your spam or junk folder. If you are not signed in, sign in first.</p>
+
+      <nav class="auth-links" aria-label="Account links">
+        <a href="login.html">Return to sign in</a>
+        <a href="contact.html">Contact support</a>
+      </nav>
+    </section>
+  </main>
+
+  <footer class="auth-footer">
+    <a href="privacy.html">Privacy</a> ·
+    <a href="terms.html">Terms</a>
+  </footer>
+</body>
+</html>

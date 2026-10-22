@@ -1,0 +1,12 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 92" role="img" aria-labelledby="title">
+  <title id="title">Corridor Funding</title>
+  <g transform="translate(8 9)">
+    <rect width="72" height="72" rx="17" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.35"/>
+    <path d="M18 22H39C47 22 52 27 52 35V48H40V35C40 33 39 32 36 32H29V53H18Z" fill="#FFFFFF"/>
+    <path d="M35 43H53V53H35Z" fill="#57A8D8"/>
+    <path d="M46 22H55V31H46Z" fill="#57A8D8"/>
+  </g>
+  <text x="94" y="43" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">CORRIDOR</text>
+  <text x="96" y="66" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" letter-spacing="4" fill="#9EDBFF">FUNDING</text>
+</svg>

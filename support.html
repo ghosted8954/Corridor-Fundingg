@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Support | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="brand">
+        <img src="logo.svg" alt="Corridor Funding" width="180">
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation"
+        aria-expanded="false" data-menu-toggle>☰</button>
+      <nav class="site-nav" data-site-nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="messages.html">Messages</a>
+        <a href="support.html" aria-current="page">Support</a>
+        <a href="profile.html">Profile</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dashboard-layout container">
+    <section class="dashboard-main">
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">WE'RE HERE TO HELP</p>
+          <h1>Customer Support</h1>
+          <p>Send a support request and review its recorded status.</p>
+        </div>
+      </div>
+
+      <div id="supportStatus" class="status-message" role="status"
+        aria-live="polite"></div>
+
+      <form id="supportForm" class="form-card">
+        <div class="form-group">
+          <label for="supportCategory">What do you need help with?</label>
+          <select id="supportCategory" name="category" required>
+            <option value="">Choose a topic</option>
+            <option value="account">Account access</option>
+            <option value="application">Loan application</option>
+            <option value="offer">Loan offer</option>
+            <option value="loan-account">Loan account</option>
+            <option value="transaction">Transaction question</option>
+            <option value="technical">Website technical issue</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="supportSubject">Subject</label>
+          <input id="supportSubject" name="subject" type="text"
+            minlength="4" maxlength="120" required>
+        </div>
+
+        <div class="form-group">
+          <label for="supportMessage">How can we help?</label>
+          <textarea id="supportMessage" name="message" rows="5"
+            minlength="10" maxlength="3000" required
+            placeholder="Describe your question without including passwords or sensitive financial details."></textarea>
+        </div>
+
+        <button id="submitSupportButton" class="btn btn-primary" type="submit">
+          Send Support Request
+        </button>
+      </form>
+
+      <h2>Your Support Requests</h2>
+      <div id="supportTicketsList" class="application-list"></div>
+      <p class="legal-note">
+        Do not include passwords, full payment-card details, or full Social Security
+        numbers in support requests. A submitted request is not an indication that
+        a loan has been approved.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="ui.js"></script>
+  <script type="module" src="support.js"></script>
+</body>
+</html>

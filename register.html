@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create a Corridor Funding account.">
+  <title>Create Account | Corridor Funding</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="auth.css">
+  <script type="module" src="auth.js"></script>
+</head>
+<body class="auth-page">
+  <header class="auth-header">
+    <a href="index.html" aria-label="Corridor Funding home">
+      <img src="logo.svg" alt="Corridor Funding">
+    </a>
+    <a href="login.html">Sign in</a>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card">
+      <h1>Create your account</h1>
+      <p class="auth-intro">Set up your account to manage your information and loan applications.</p>
+
+      <div id="authMessage" class="auth-message" role="status" aria-live="polite" hidden></div>
+
+      <form id="registerForm" class="auth-form">
+        <div class="auth-field">
+          <label for="displayName">Full name</label>
+          <input id="displayName" name="displayName" type="text" autocomplete="name" required minlength="2" maxlength="100">
+        </div>
+
+        <div class="auth-field">
+          <label for="registerEmail">Email address</label>
+          <input id="registerEmail" name="email" type="email" autocomplete="email" required maxlength="254">
+        </div>
+
+        <div class="auth-field">
+          <label for="registerPassword">Password</label>
+          <input id="registerPassword" name="password" type="password" autocomplete="new-password" required minlength="8">
+          <span class="auth-note">Use at least 8 characters. A unique password is recommended.</span>
+        </div>
+
+        <div class="auth-field">
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required minlength="8">
+        </div>
+
+        <label class="auth-checkbox">
+          <input id="acceptTerms" name="acceptTerms" type="checkbox" required>
+          <span>I have reviewed the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</span>
+        </label>
+
+        <button class="auth-submit" type="submit">Create account</button>
+      </form>
+
+      <p class="auth-note">Creating an account does not guarantee loan eligibility or approval. Availability depends on the product, state, and applicant.</p>
+
+      <nav class="auth-links" aria-label="Account links">
+        <a href="login.html">Already have an account? Sign in</a>
+      </nav>
+    </section>
+  </main>
+
+  <footer class="auth-footer">
+    <a href="privacy.html">Privacy</a> ·
+    <a href="terms.html">Terms</a> ·
+    <a href="contact.html">Contact</a>
+  </footer>
+</body>
+</html>

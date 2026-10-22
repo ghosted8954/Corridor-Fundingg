@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Manage your Corridor Funding profile information.">
+  <title>My Profile | Corridor Funding</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <script type="module" src="profile.js"></script>
+</head>
+<body class="auth-page">
+  <header class="auth-header">
+    <a href="index.html" aria-label="Corridor Funding home">
+      <img src="logo.svg" alt="Corridor Funding">
+    </a>
+    <nav class="dashboard-top-nav" aria-label="Account navigation">
+      <a href="dashboard.html">Dashboard</a>
+      <button type="button" class="auth-secondary-button" data-signout>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card">
+      <h1>My profile</h1>
+      <p class="auth-intro">Keep your contact information accurate. Your email address is managed by Firebase Authentication.</p>
+
+      <div id="profileMessage" class="auth-message" role="status" aria-live="polite" hidden></div>
+
+      <form id="profileForm" class="auth-form" hidden>
+        <div class="auth-field">
+          <label for="profileName">Full name</label>
+          <input id="profileName" name="displayName" type="text" autocomplete="name" required minlength="2" maxlength="100">
+        </div>
+
+        <div class="auth-field">
+          <label for="profileEmail">Email address</label>
+          <input id="profileEmail" name="email" type="email" autocomplete="email" readonly>
+        </div>
+
+        <div class="auth-field">
+          <label for="profilePhone">Phone number</label>
+          <input id="profilePhone" name="phone" type="tel" autocomplete="tel" maxlength="30">
+        </div>
+
+        <div class="auth-field">
+          <label for="profileAddress">Street address</label>
+          <input id="profileAddress" name="address" autocomplete="street-address" maxlength="200">
+        </div>
+
+        <div class="auth-field">
+          <label for="profileCity">City</label>
+          <input id="profileCity" name="city" autocomplete="address-level2" maxlength="100">
+        </div>
+
+        <div class="auth-field">
+          <label for="profileState">State or District</label>
+          <select id="profileState" name="state" autocomplete="address-level1">
+            <option value="">Choose a state</option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="DC">District of Columbia</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
+            <option value="WA">Washington</option>
+            <option value="WV">West Virginia</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+          </select>
+        </div>
+
+        <div class="auth-field">
+          <label for="profilePostalCode">ZIP code</label>
+          <input id="profilePostalCode" name="postalCode" autocomplete="postal-code" maxlength="10">
+        </div>
+
+        <button class="auth-submit" type="submit">Save changes</button>
+      </form>
+
+      <p class="auth-note">Keep your account information accurate. Updating a profile does not change loan eligibility or guarantee an application outcome.</p>
+    </section>
+  </main>
+
+  <footer class="auth-footer">
+    <a href="privacy.html">Privacy</a> ·
+    <a href="terms.html">Terms</a> ·
+    <a href="contact.html">Contact</a>
+  </footer>
+</body>
+</html>

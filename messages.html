@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages | Corridor Funding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="brand">
+        <img src="logo.svg" alt="Corridor Funding" width="180">
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation"
+        aria-expanded="false" data-menu-toggle>☰</button>
+      <nav class="site-nav" data-site-nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="messages.html" aria-current="page">Messages</a>
+        <a href="support.html">Support</a>
+        <a href="profile.html">Profile</a>
+        <button type="button" data-signout>Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dashboard-layout container">
+    <section class="dashboard-main">
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">YOUR ACCOUNT</p>
+          <h1>Messages</h1>
+          <p>View conversations associated with your account.</p>
+        </div>
+        <a class="btn btn-primary" href="support.html">Contact Support</a>
+      </div>
+
+      <div id="messagesStatus" class="status-message" role="status"
+        aria-live="polite">Loading conversations...</div>
+
+      <div id="conversationsList" class="application-list"></div>
+
+      <section id="conversationsEmpty" class="empty-state" hidden>
+        <h2>No conversations yet</h2>
+        <p>If a conversation is available for your account, it will appear here.</p>
+        <a class="btn btn-primary" href="support.html">Contact Support</a>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="ui.js"></script>
+  <script type="module" src="messages.js"></script>
+</body>
+</html>
