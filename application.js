@@ -1,10 +1,11 @@
 
-import { auth, db } from "./firebase-init.js";
+import { db } from "./firebase-init.js";
 import { requireAuth } from "./auth-guard.js";
 import {
   isAllowedState,
   isAllowedLoanProduct
 } from "./security.js";
+
 import {
   collection,
   doc,
@@ -27,27 +28,28 @@ const submitButton = document.getElementById("submitApplicationButton");
 const stateOptions = [
   ["AL", "Alabama"], ["AK", "Alaska"], ["AZ", "Arizona"],
   ["AR", "Arkansas"], ["CA", "California"], ["CO", "Colorado"],
-  ["CT", "Connecticut"], ["DE", "Delaware"],
-  ["DC", "District of Columbia"], ["FL", "Florida"],
-  ["GA", "Georgia"], ["HI", "Hawaii"], ["ID", "Idaho"],
-  ["IL", "Illinois"], ["IN", "Indiana"], ["IA", "Iowa"],
-  ["KS", "Kansas"], ["KY", "Kentucky"], ["LA", "Louisiana"],
-  ["ME", "Maine"], ["MD", "Maryland"], ["MA", "Massachusetts"],
-  ["MI", "Michigan"], ["MN", "Minnesota"], ["MS", "Mississippi"],
-  ["MO", "Missouri"], ["MT", "Montana"], ["NE", "Nebraska"],
-  ["NV", "Nevada"], ["NH", "New Hampshire"], ["NJ", "New Jersey"],
-  ["NM", "New Mexico"], ["NY", "New York"], ["NC", "North Carolina"],
-  ["ND", "North Dakota"], ["OH", "Ohio"], ["OK", "Oklahoma"],
-  ["OR", "Oregon"], ["PA", "Pennsylvania"], ["RI", "Rhode Island"],
-  ["SC", "South Carolina"], ["SD", "South Dakota"],
-  ["TN", "Tennessee"], ["TX", "Texas"], ["UT", "Utah"],
-  ["VT", "Vermont"], ["VA", "Virginia"], ["WA", "Washington"],
-  ["WV", "West Virginia"], ["WI", "Wisconsin"], ["WY", "Wyoming"]
+  ["CT", "Connecticut"], ["DE", "Delaware"], ["DC", "District of Columbia"],
+  ["FL", "Florida"], ["GA", "Georgia"], ["HI", "Hawaii"],
+  ["ID", "Idaho"], ["IL", "Illinois"], ["IN", "Indiana"],
+  ["IA", "Iowa"], ["KS", "Kansas"], ["KY", "Kentucky"],
+  ["LA", "Louisiana"], ["ME", "Maine"], ["MD", "Maryland"],
+  ["MA", "Massachusetts"], ["MI", "Michigan"], ["MN", "Minnesota"],
+  ["MS", "Mississippi"], ["MO", "Missouri"], ["MT", "Montana"],
+  ["NE", "Nebraska"], ["NV", "Nevada"], ["NH", "New Hampshire"],
+  ["NJ", "New Jersey"], ["NM", "New Mexico"], ["NY", "New York"],
+  ["NC", "North Carolina"], ["ND", "North Dakota"], ["OH", "Ohio"],
+  ["OK", "Oklahoma"], ["OR", "Oregon"], ["PA", "Pennsylvania"],
+  ["RI", "Rhode Island"], ["SC", "South Carolina"],
+  ["SD", "South Dakota"], ["TN", "Tennessee"], ["TX", "Texas"],
+  ["UT", "Utah"], ["VT", "Vermont"], ["VA", "Virginia"],
+  ["WA", "Washington"], ["WV", "West Virginia"],
+  ["WI", "Wisconsin"], ["WY", "Wyoming"]
 ];
 
 let currentUser = null;
 let existingApplicationId = null;
 let busy = false;
+let applicationReadOnly = false;
 
 function showStatus(message, type = "info") {
   if (!statusElement) return;
@@ -58,8 +60,8 @@ function showStatus(message, type = "info") {
 
 function setBusy(value) {
   busy = value;
-  if (draftButton) draftButton.disabled = value;
-  if (submitButton) submitButton.disabled = value;
+  if (draftButton) draftButton.disabled = value || applicationReadOnly;
+  if (submitButton) submitButton.disabled = value || applicationReadOnly;
 }
 
 function populateStates() {
@@ -70,6 +72,69 @@ function populateStates() {
     option.value = code;
     option.textContent = name;
     stateElement.appendChild(option);
+  }
+}
+
+function setFormReadOnly() {
+  applicationReadOnly = true;
+
+  form.querySelectorAll("input, select, textarea").forEach((element) => {
+    element.disabled = true;
+  });
+
+  if (draftButton) draftButton.disabled = true;
+  if (submitButton) submitButton.disabled = true;
+}
+
+function showApplicationDetails(data) {
+  const statusLabels = {
+    draft: "Draft",
+    submitted: "Submitted",
+    in_review: "In review",
+    under_review: "Under review",
+    approved: "Approved",
+    declined: "Declined",
+    withdrawn: "Withdrawn"
+  };
+
+  const status = statusLabels[data.status] || "Status unavailable";
+
+  const details = document.createElement("section");
+  details.className = "application-review-details";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Application status";
+  details.appendChild(heading);
+
+  const statusText = document.createElement("p");
+  statusText.textContent = `Current status: ${status}`;
+  details.appendChild(statusText);
+
+  if (data.decisionReason) {
+    const noteHeading = document.createElement("h3");
+    noteHeading.textContent = data.status === "declined"
+      ? "Decision or decline reason"
+      : "Administrator review note";
+
+    const note = document.createElement("p");
+    note.textContent = data.decisionReason;
+
+    details.append(noteHeading, note);
+  } else if (["approved", "declined", "in_review"].includes(data.status)) {
+    const note = document.createElement("p");
+    note.textContent = "No review note has been provided.";
+    details.appendChild(note);
+  }
+
+  form.before(details);
+
+  if (data.status !== "draft") {
+    setFormReadOnly();
+
+    showStatus(
+      "This saved application is read-only. Its status and any review note appear above.",
+      "info"
+    );
   }
 }
 
@@ -108,7 +173,11 @@ function readForm() {
 
 async function saveApplication(status) {
   if (!currentUser) {
-    throw new Error("Your sign-in could not be confirmed. Please sign in again.");
+    throw new Error("Please sign in again.");
+  }
+
+  if (applicationReadOnly) {
+    throw new Error("This application is read-only.");
   }
 
   const values = readForm();
@@ -155,7 +224,7 @@ async function saveApplication(status) {
 }
 
 async function handleSave(status) {
-  if (busy) return;
+  if (busy || applicationReadOnly) return;
 
   setBusy(true);
 
@@ -166,20 +235,17 @@ async function handleSave(status) {
       showStatus("Your draft has been saved.", "success");
     } else {
       showStatus(
-        "Your application has been submitted. This is not an approval or guarantee of funding.",
+        "Your application has been submitted. This does not guarantee approval or funding.",
         "success"
       );
-
-      form.querySelectorAll("input, select, textarea, button")
-        .forEach((element) => {
-          element.disabled = true;
-        });
+      setFormReadOnly();
     }
   } catch (error) {
     console.error("Application save failed:", error);
+
     showStatus(
       error.code === "permission-denied"
-        ? "Permission denied by Firestore. Please report this message so we can check the rules."
+        ? "Firebase denied this action. Please check the security rules."
         : error.message || "Unable to save the application.",
       "error"
     );
@@ -202,40 +268,35 @@ async function loadApplication(id) {
   }
 
   existingApplicationId = snapshot.id;
+
   productElement.value = data.product || "";
   stateElement.value = data.state || "";
   amountElement.value = data.requestedAmount ?? "";
   purposeElement.value = data.purpose || "";
 
-  if (data.status !== "draft") {
-    form.querySelectorAll("input, select, textarea, button")
-      .forEach((element) => {
-        element.disabled = true;
-      });
-
-    showStatus(
-      `This application is ${data.status || "not editable"} and cannot be edited here.`
-    );
-  }
+  showApplicationDetails(data);
 }
 
 async function initializeApplication() {
+  if (!form || !productElement || !stateElement ||
+      !amountElement || !purposeElement || !acknowledgementElement) {
+    showStatus("The application form could not be initialized.", "error");
+    return;
+  }
+
   populateStates();
 
   if (draftButton) {
     draftButton.addEventListener("click", () => handleSave("draft"));
   }
 
-  if (form) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      handleSave("submitted");
-    });
-  }
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    handleSave("submitted");
+  });
 
   try {
     currentUser = await requireAuth();
-
     if (!currentUser) return;
 
     const params = new URLSearchParams(window.location.search);
@@ -253,13 +314,16 @@ async function initializeApplication() {
 
     if (applicationId) {
       await loadApplication(applicationId);
+    } else {
+      showStatus("Application form is ready.", "info");
     }
-
-    showStatus("Application form is ready.", "info");
   } catch (error) {
     console.error("Application initialization failed:", error);
+
     showStatus(
-      "The application page could not initialize. Refresh the page or sign in again.",
+      error.code === "permission-denied"
+        ? "You cannot access this application with the current account."
+        : error.message || "The application page could not initialize.",
       "error"
     );
   }
