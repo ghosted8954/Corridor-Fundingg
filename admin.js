@@ -1,40 +1,101 @@
-import { db } from "./firebase-init.js"; import { requireAdmin } from "./auth-guard.js"; import { collection, getCountFromServer, query, where } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-const statusElement = document.getElementById("adminStatus"); const contentElement = document.getElementById("adminContent");
+import { db } from "./firebase-init.js";
+import { requireAdmin } from "./auth-guard.js";
+import {
+  collection,
+  getCountFromServer,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-function showStatus(message, type = "info") { if (!statusElement) return;
+const statusElement = document.getElementById("adminStatus");
+const contentElement = document.getElementById("adminContent");
 
-statusElement.textContent = message; statusElement.dataset.type = type; statusElement.hidden = false; }
+function showStatus(message, type = "info") {
+  if (!statusElement) return;
 
-function showCount(id, value) { const element = document.getElementById(id);
+  statusElement.textContent = message;
+  statusElement.dataset.type = type;
+  statusElement.hidden = false;
+}
 
-if (element) { element.textContent = Number.isFinite(value) ? value.toLocaleString() : "Unavailable"; } }
+function showCount(id, value) {
+  const element = document.getElementById(id);
 
-async function loadAdminSummary() { showStatus("Loading administrative summary...");
+  if (element) {
+    element.textContent =
+      Number.isFinite(value) ? value.toLocaleString() : "Unavailable";
+  }
+}
 
-try { const [users, applications, submitted, loans] = await Promise.all([ getCountFromServer(collection(db, "users")), getCountFromServer(collection(db, "applications")), getCountFromServer( query( collection(db, "applications"), where("status", "==", "submitted") ) ), getCountFromServer(collection(db, "loans")) ]);
+async function loadCount(label, countQuery) {
+  try {
+    const result = await getCountFromServer(countQuery);
+    return result.data().count;
+  } catch (error) {
+    console.error(`Could not load ${label} count:`, error);
+    return null;
+  }
+}
 
-showCount("totalUsers", users.data().count); showCount("totalApplications", applications.data().count); showCount("submittedApplications", submitted.data().count); showCount("totalLoans", loans.data().count); showStatus("Summary loaded from Firebase.", "success"); 
+async function loadAdminSummary() {
+  showStatus("Loading administrative summary...");
 
-} catch (error) { console.error("Could not load admin summary:", error);
+  const results = await Promise.all([
+    loadCount("Customer profiles", collection(db, "users")),
+    loadCount("Loan applications", collection(db, "applications")),
+    loadCount(
+      "Submitted applications",
+      query(
+        collection(db, "applications"),
+        where("status", "==", "submitted")
+      )
+    ),
+    loadCount("Loan accounts", collection(db, "loans"))
+  ]);
 
-showStatus( "Some figures could not be loaded. Check Firebase permissions and security rules.", "error" ); 
+  const ids = [
+    "totalUsers",
+    "totalApplications",
+    "submittedApplications",
+    "totalLoans"
+  ];
 
-} }
+  results.forEach((count, index) => {
+    showCount(ids[index], count === null ? NaN : count);
+  });
 
-async function initializeAdminDashboard() { if (contentElement) contentElement.hidden = true;
+  if (results.every((count) => count !== null)) {
+    showStatus("Summary loaded from Firebase.", "success");
+  } else {
+    showStatus(
+      "Some figures are unavailable. Check the browser console for the specific Firebase permission error.",
+      "error"
+    );
+  }
+}
 
-showStatus("Checking administrator access...");
+async function initializeAdminDashboard() {
+  if (contentElement) contentElement.hidden = true;
 
-try { const user = await requireAdmin();
+  showStatus("Checking administrator access...");
 
-if (!user) return; if (contentElement) contentElement.hidden = false; await loadAdminSummary(); 
+  try {
+    const user = await requireAdmin();
 
-} catch (error) { console.error("Admin access check failed:", error);
+    if (!user) return;
 
-showStatus( "Could not verify administrator access. Please try signing in again.", "error" ); 
+    if (contentElement) contentElement.hidden = false;
 
-} }
+    await loadAdminSummary();
+  } catch (error) {
+    console.error("Admin access check failed:", error);
+
+    showStatus(
+      "Could not verify administrator access. Please try signing in again.",
+      "error"
+    );
+  }
+}
 
 initializeAdminDashboard();
-
