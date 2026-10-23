@@ -374,3 +374,32 @@
     padding: 16px;
   }
 }
+
+/* Loan application status messages */
+.status-message {
+  display: block;
+  padding: 13px 16px;
+  margin: 0 0 20px;
+  border: 1px solid #d8e6f3;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1e40af;
+  overflow-wrap: anywhere;
+}
+
+.status-message[hidden] {
+  display: none;
+}
+
+.status-message[data-type="success"] {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.status-message[data-type="error"] {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
