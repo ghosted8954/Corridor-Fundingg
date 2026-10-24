@@ -22,10 +22,12 @@ function showStatus(message, type = "info") {
 function showCount(id, value) {
   const element = document.getElementById(id);
 
-  if (element) {
-    element.textContent =
-      Number.isFinite(value) ? value.toLocaleString() : "Unavailable";
-  }
+  if (!element) return;
+
+  element.textContent =
+    typeof value === "number" && Number.isFinite(value)
+      ? value.toLocaleString()
+      : String(value);
 }
 
 async function loadCount(label, countQuery) {
@@ -42,34 +44,50 @@ async function loadAdminSummary() {
   showStatus("Loading administrative summary...");
 
   const results = await Promise.all([
-    loadCount("Customer profiles", collection(db, "users")),
-    loadCount("Loan applications", collection(db, "applications")),
+    loadCount(
+      "Customer profiles",
+      collection(db, "users")
+    ),
+    loadCount(
+      "Loan applications",
+      collection(db, "applications")
+    ),
     loadCount(
       "Submitted applications",
       query(
         collection(db, "applications"),
         where("status", "==", "submitted")
       )
-    ),
-    loadCount("Loan accounts", collection(db, "loans"))
+    )
   ]);
 
-  const ids = [
+  showCount(
     "totalUsers",
-    "totalApplications",
-    "submittedApplications",
-    "totalLoans"
-  ];
+    results[0] === null ? "Unavailable" : results[0]
+  );
 
-  results.forEach((count, index) => {
-    showCount(ids[index], count === null ? NaN : count);
-  });
+  showCount(
+    "totalApplications",
+    results[1] === null ? "Unavailable" : results[1]
+  );
+
+  showCount(
+    "submittedApplications",
+    results[2] === null ? "Unavailable" : results[2]
+  );
+
+  // Loan records remain restricted to protect financial data.
+  // A secure backend is needed to provide this count.
+  showCount("totalLoans", "Restricted");
 
   if (results.every((count) => count !== null)) {
-    showStatus("Summary loaded from Firebase.", "success");
+    showStatus(
+      "Summary loaded. Loan account records remain restricted.",
+      "success"
+    );
   } else {
     showStatus(
-      "Some figures are unavailable. Check the browser console for the specific Firebase permission error.",
+      "Some summary figures are unavailable. Check the application and customer permissions.",
       "error"
     );
   }
@@ -92,7 +110,7 @@ async function initializeAdminDashboard() {
     console.error("Admin access check failed:", error);
 
     showStatus(
-      "Could not verify administrator access. Please try signing in again.",
+      "Could not verify administrator access. Please sign in again.",
       "error"
     );
   }
