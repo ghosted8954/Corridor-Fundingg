@@ -46,6 +46,25 @@ const stateOptions = [
   ["WI", "Wisconsin"], ["WY", "Wyoming"]
 ];
 
+const stateNames = Object.fromEntries(stateOptions);
+
+const productNames = {
+  personal: "Personal loan",
+  mortgage: "Mortgage loan",
+  business: "Business loan",
+  "debt-consolidation": "Debt consolidation"
+};
+
+const statusLabels = {
+  draft: "Draft",
+  submitted: "Submitted",
+  in_review: "In review",
+  under_review: "Under review",
+  approved: "Approved",
+  declined: "Declined",
+  withdrawn: "Withdrawn"
+};
+
 let currentUser = null;
 let existingApplicationId = null;
 let busy = false;
@@ -53,6 +72,7 @@ let applicationReadOnly = false;
 
 function showStatus(message, type = "info") {
   if (!statusElement) return;
+
   statusElement.textContent = message;
   statusElement.dataset.type = type;
   statusElement.hidden = false;
@@ -60,8 +80,14 @@ function showStatus(message, type = "info") {
 
 function setBusy(value) {
   busy = value;
-  if (draftButton) draftButton.disabled = value || applicationReadOnly;
-  if (submitButton) submitButton.disabled = value || applicationReadOnly;
+
+  if (draftButton) {
+    draftButton.disabled = value || applicationReadOnly;
+  }
+
+  if (submitButton) {
+    submitButton.disabled = value || applicationReadOnly;
+  }
 }
 
 function populateStates() {
@@ -73,6 +99,59 @@ function populateStates() {
     option.textContent = name;
     stateElement.appendChild(option);
   }
+}
+
+function formatAmount(value) {
+  const amount = Number(value);
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return "Not available";
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(amount);
+}
+
+function formatDate(value) {
+  try {
+    if (!value) return "Not available";
+
+    const date =
+      typeof value.toDate === "function"
+        ? value.toDate()
+        : new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "Not available";
+    }
+
+    return new Intl.DateTimeFormat("en-US", {
+      dateStyle: "medium",
+      timeStyle: "short"
+    }).format(date);
+  } catch {
+    return "Not available";
+  }
+}
+
+function addDetail(container, label, value) {
+  const row = document.createElement("div");
+  row.className = "application-detail-row";
+
+  const heading = document.createElement("h3");
+  heading.className = "application-detail-label";
+  heading.textContent = label;
+
+  const content = document.createElement("p");
+  content.className = "application-detail-value";
+  content.textContent = value || "Not provided";
+
+  row.append(heading, content);
+  container.appendChild(row);
 }
 
 function setFormReadOnly() {
@@ -87,52 +166,110 @@ function setFormReadOnly() {
 }
 
 function showApplicationDetails(data) {
-  const statusLabels = {
-    draft: "Draft",
-    submitted: "Submitted",
-    in_review: "In review",
-    under_review: "Under review",
-    approved: "Approved",
-    declined: "Declined",
-    withdrawn: "Withdrawn"
-  };
-
   const status = statusLabels[data.status] || "Status unavailable";
+  const isFinalDecision = ["approved", "declined"].includes(data.status);
 
   const details = document.createElement("section");
   details.className = "application-review-details";
+  details.setAttribute("aria-labelledby", "applicationDetailsHeading");
 
   const heading = document.createElement("h2");
-  heading.textContent = "Application status";
-  details.appendChild(heading);
+  heading.id = "applicationDetailsHeading";
+  heading.textContent = "Application details";
 
-  const statusText = document.createElement("p");
-  statusText.textContent = `Current status: ${status}`;
-  details.appendChild(statusText);
+  const statusRow = document.createElement("div");
+  statusRow.className = "application-status-summary";
+
+  const statusLabel = document.createElement("span");
+  statusLabel.textContent = "Current status";
+
+  const statusValue = document.createElement("strong");
+  statusValue.className = `status-pill status-${String(data.status || "unknown")}`;
+  statusValue.textContent = status;
+
+  statusRow.append(statusLabel, statusValue);
+  details.append(heading, statusRow);
+
+  addDetail(
+    details,
+    "Loan product",
+    productNames[data.product] || "Not available"
+  );
+
+  addDetail(
+    details,
+    "State or jurisdiction",
+    stateNames[data.state] || data.state || "Not provided"
+  );
+
+  addDetail(
+    details,
+    "Requested amount",
+    formatAmount(data.requestedAmount)
+  );
+
+  addDetail(
+    details,
+    "Purpose of the loan",
+    data.purpose || "Not provided"
+  );
+
+  addDetail(
+    details,
+    "Application date",
+    formatDate(data.createdAt)
+  );
 
   if (data.decisionReason) {
-    const noteHeading = document.createElement("h3");
-    noteHeading.textContent = data.status === "declined"
-      ? "Decision or decline reason"
-      : "Administrator review note";
-
-    const note = document.createElement("p");
-    note.textContent = data.decisionReason;
-
-    details.append(noteHeading, note);
-  } else if (["approved", "declined", "in_review"].includes(data.status)) {
-    const note = document.createElement("p");
-    note.textContent = "No review note has been provided.";
-    details.appendChild(note);
+    addDetail(
+      details,
+      data.status === "declined"
+        ? "Decline reason"
+        : "Administrator review note",
+      data.decisionReason
+    );
+  } else if (isFinalDecision || data.status === "in_review") {
+    addDetail(
+      details,
+      data.status === "declined" ? "Decline reason" : "Review note",
+      "No note has been provided."
+    );
   }
+
+  if (data.reviewedAt) {
+    addDetail(details, "Last reviewed", formatDate(data.reviewedAt));
+  }
+
+  const disclaimer = document.createElement("p");
+  disclaimer.className = "legal-note";
+
+  if (data.status === "approved") {
+    disclaimer.textContent =
+      "An application marked approved does not by itself confirm that funds have been issued. Refer to official loan documents for any actual offer and its terms.";
+  } else if (data.status === "declined") {
+    disclaimer.textContent =
+      "This application has been declined. Contact the lender through its verified support channel if you need clarification.";
+  } else {
+    disclaimer.textContent =
+      "Application status may change as the application is reviewed. Submission does not guarantee approval or funding.";
+  }
+
+  details.appendChild(disclaimer);
 
   form.before(details);
 
+  // Non-draft records are displayed as details, not as an editable form.
   if (data.status !== "draft") {
+    form.hidden = true;
     setFormReadOnly();
 
     showStatus(
-      "This saved application is read-only. Its status and any review note appear above.",
+      "Your saved application details are shown below.",
+      "info"
+    );
+  } else {
+    showStatus(
+      "You can continue editing this draft before submitting it.",
       "info"
     );
   }
@@ -161,7 +298,9 @@ function readForm() {
   }
 
   if (purpose.length < 10 || purpose.length > 1000) {
-    throw new Error("The purpose must be between 10 and 1,000 characters.");
+    throw new Error(
+      "The purpose must be between 10 and 1,000 characters."
+    );
   }
 
   if (!acknowledgementElement.checked) {
@@ -181,7 +320,6 @@ async function saveApplication(status) {
   }
 
   const values = readForm();
-  const now = serverTimestamp();
 
   if (existingApplicationId) {
     const reference = doc(db, "applications", existingApplicationId);
@@ -198,7 +336,7 @@ async function saveApplication(status) {
     await updateDoc(reference, {
       ...values,
       status,
-      updatedAt: now
+      updatedAt: serverTimestamp()
     });
   } else {
     const reference = doc(collection(db, "applications"));
@@ -207,8 +345,8 @@ async function saveApplication(status) {
       ownerUid: currentUser.uid,
       ...values,
       status,
-      createdAt: now,
-      updatedAt: now
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
     });
 
     existingApplicationId = reference.id;
@@ -238,7 +376,9 @@ async function handleSave(status) {
         "Your application has been submitted. This does not guarantee approval or funding.",
         "success"
       );
-      setFormReadOnly();
+
+      // Reload the saved record so it switches to the details view.
+      await loadApplication(existingApplicationId);
     }
   } catch (error) {
     console.error("Application save failed:", error);
@@ -274,12 +414,23 @@ async function loadApplication(id) {
   amountElement.value = data.requestedAmount ?? "";
   purposeElement.value = data.purpose || "";
 
+  // Remove any previously rendered details before refreshing the view.
+  form.parentElement
+    .querySelectorAll(".application-review-details")
+    .forEach((element) => element.remove());
+
   showApplicationDetails(data);
 }
 
 async function initializeApplication() {
-  if (!form || !productElement || !stateElement ||
-      !amountElement || !purposeElement || !acknowledgementElement) {
+  if (
+    !form ||
+    !productElement ||
+    !stateElement ||
+    !amountElement ||
+    !purposeElement ||
+    !acknowledgementElement
+  ) {
     showStatus("The application form could not be initialized.", "error");
     return;
   }
@@ -297,6 +448,7 @@ async function initializeApplication() {
 
   try {
     currentUser = await requireAuth();
+
     if (!currentUser) return;
 
     const params = new URLSearchParams(window.location.search);
