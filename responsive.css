@@ -449,3 +449,140 @@ word-break: normal;
     overflow-wrap: anywhere;
   }
 }
+
+/* Corridor Funding — responsive application form */
+.form-card {
+  width: 100%;
+  min-width: 0;
+  padding: clamp(18px, 4vw, 30px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.page-heading {
+  margin-bottom: 24px;
+}
+
+.page-heading h1 {
+  margin: 0 0 8px;
+  color: var(--primary-dark);
+  font-size: clamp(26px, 5vw, 36px);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.page-heading p {
+  color: var(--muted);
+}
+
+.form-card .form-group {
+  margin-bottom: 20px;
+}
+
+.form-card label {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.form-card input:not([type="checkbox"]),
+.form-card select,
+.form-card textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.form-card textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(46, 120, 183, 0.13);
+}
+
+.form-card small,
+.legal-note {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.form-check input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 4px;
+}
+
+.form-check label {
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.form-actions .btn {
+  min-width: 0;
+}
+
+.legal-note {
+  margin-top: 20px;
+}
+
+@media (max-width: 560px) {
+  .dashboard-layout.container {
+    width: calc(100% - 28px);
+  }
+
+  .dashboard-main {
+    padding: 22px 0;
+  }
+
+  .page-heading {
+    margin-bottom: 18px;
+  }
+
+  .form-card {
+    padding: 18px 15px;
+    border-radius: 14px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
