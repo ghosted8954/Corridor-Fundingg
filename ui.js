@@ -36,7 +36,8 @@ const CorridorUI = {
     if (!container) return;
 
     const toast = document.createElement("div");
-    toast.className = `toast ${type === "success" || type === "error" ? type : ""}`.trim();
+    toast.className =
+      `toast ${type === "success" || type === "error" ? type : ""}`.trim();
     toast.textContent = String(message);
     toast.setAttribute("role", "status");
 
@@ -48,46 +49,55 @@ const CorridorUI = {
   }
 };
 
-// Keep the shared UI interface available to other browser modules.
 window.CorridorUI = CorridorUI;
 
 function setupMobileNavigation() {
-  const button = getElement("#mobileMenuButton");
-  const navigation = getElement("#mainNav");
+  const button =
+    getElement("#mobileMenuButton") ||
+    getElement("[data-menu-toggle]");
+
+  const navigation =
+    getElement("#mainNav") ||
+    getElement("[data-site-nav]");
 
   if (!button || !navigation) return;
 
-  button.addEventListener("click", () => {
-    const isOpen = navigation.classList.toggle("is-open");
+  const closeMenu = () => {
+    navigation.classList.remove("is-open");
+    button.setAttribute("aria-expanded", "false");
 
+    if (button.hasAttribute("aria-label")) {
+      button.setAttribute("aria-label", "Open navigation");
+    }
+  };
+
+  button.addEventListener("click", () => {
+    const isOpen = !navigation.classList.contains("is-open");
+
+    navigation.classList.toggle("is-open", isOpen);
     button.setAttribute("aria-expanded", String(isOpen));
-    button.setAttribute(
-      "aria-label",
-      isOpen ? "Close navigation" : "Open navigation"
-    );
+
+    if (button.hasAttribute("aria-label")) {
+      button.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation" : "Open navigation"
+      );
+    }
   });
 
   navigation.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      navigation.classList.remove("is-open");
-      button.setAttribute("aria-expanded", "false");
-      button.setAttribute("aria-label", "Open navigation");
-    });
+    link.addEventListener("click", closeMenu);
   });
 
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
-      navigation.classList.remove("is-open");
-      button.setAttribute("aria-expanded", "false");
-      button.setAttribute("aria-label", "Open navigation");
+      closeMenu();
     }
   });
 
   window.addEventListener("resize", () => {
     if (window.innerWidth > 820) {
-      navigation.classList.remove("is-open");
-      button.setAttribute("aria-expanded", "false");
-      button.setAttribute("aria-label", "Open navigation");
+      closeMenu();
     }
   });
 }
@@ -150,13 +160,6 @@ function setupQuickStartForm() {
       );
       return;
     }
-
-    /*
-     * This form only carries the visitor's selections into the next step.
-     * It does NOT establish licensing, state availability, eligibility,
-     * credit approval, or loan approval. Those checks must be performed
-     * by the application workflow and trusted authorization configuration.
-     */
 
     CorridorUI.setStatus(
       statusElement,
